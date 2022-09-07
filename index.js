@@ -49,6 +49,7 @@ let Mac = new Member('Mac', 'Berks', 456, 'male', 25, 'standard');
 Sam.getDetails();
 Sam.extendMembership('yearly');
 console.log(Sam);
+console.log('git updated');
 
 
 
