@@ -49,3 +49,28 @@ for(let i=0;i<odd.length;i++){
 
 // console.log(items); 
 // console.log(items[1]);
+
+let newdiv = document.createElement('div');
+newdiv.className = 'hello';
+newdiv.id = 'hello';
+let h1 = document.createElement('h1');
+let newtext = document.createTextNode('Hello World');
+h1.appendChild(newtext);
+newdiv.appendChild(h1);
+ console.log(newdiv);
+ let container = document.querySelector('header .container');
+ console.log(container);
+//  container.appendChild(newdiv);
+let headerH1 = document.querySelector('header h1');
+// container.insertBefore(newdiv,headerH1);
+container.insertBefore(newdiv,container.firstChild);
+let newli = document.createElement('li');
+let itemtext = document.createTextNode('Hello World');
+newli.appendChild(itemtext);
+newli.className = 'list-group-item';
+let listcont = document.querySelector('.list-group');
+let firstItem = document.querySelector('.list-group-item');
+console.log(firstItem);
+listcont.insertBefore(newli,listcont.firstChild);
+
+
