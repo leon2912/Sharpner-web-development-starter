@@ -1,9 +1,15 @@
-let items = document.getElementsByClassName('list-group-item');
+// let items = document.getElementsByClassName('list-group-item');
+// console.log(items);
+// items[0].textContent = 'hello';
+// items[2].style.backgroundColor = 'green';
+// for(let i=0;i<items.length;i++){
+//     items[i].style.fontWeight = 'bold';
+// }
+let li = document.getElementsByTagName('li');
 console.log(items);
-items[0].textContent = 'hello';
-items[2].style.backgroundColor = 'green';
-for(let i=0;i<items.length;i++){
-    items[i].style.fontWeight = 'bold';
+li[2].style.backgroundColor = 'green';
+for(let i=0;i<li.length;i++){
+    li[i].style.fontWeight = 'bold';
 }
 // console.log("DOM Manipualtion Script");
 
