@@ -51,10 +51,15 @@ Sam.extendMembership('yearly');
 //console.log(Sam);
 
 let myForm = document.querySelector('#myForm');
-let myName = document.querySelector('#name');
-let myEmail = document.querySelector('#email');
+let myName = document.getElementById('name');
+let localName = localStorage.getItem('name');
+myName.value = localName;
+let myEmail = document.getElementById('email');
+let localEmail = localStorage.getItem('email');
+myEmail.value = localEmail;
 let errorMsg = document.querySelector('.errorMsg');
 let succMsg = document.querySelector('.succMsg');
+
 //console.log(myForm,myName,errorMsg);
 myForm.addEventListener('submit', (e) =>{
     e.preventDefault();
@@ -67,6 +72,8 @@ myForm.addEventListener('submit', (e) =>{
     else
     {
         console.log(`Data for User ${myName.value} with email ${myEmail.value} saved`);
+        localStorage.setItem('name',myName.value);
+        localStorage.setItem('email',myEmail.value);
         succMsg.innerHTML = 'Data Saved Successfully';
     }
 

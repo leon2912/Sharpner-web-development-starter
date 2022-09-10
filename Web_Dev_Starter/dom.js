@@ -133,7 +133,7 @@ function filterItems(e){
   // Get lis
   var items = itemList.getElementsByTagName('li');
   // Convert to an array
-  console.log(items);
+  console.table(items,['className','innerText']);
   Array.from(items).forEach(function(item){
     var itemName = item.firstChild.textContent;
     if(itemName.toLowerCase().indexOf(text) != -1){
