@@ -44,21 +44,31 @@ class Member extends Student{
     }
 }
 
+class User{
+    constructor(name,email) {
+        this.name = name;
+        this.email = email;
+    }
+}
+
 let Sam = new Member('Sam','Johnson',123,'male',22,'standard');
 let Mac = new Member('Mac', 'Berks', 456, 'male', 25, 'standard');
 Sam.getDetails();
 Sam.extendMembership('yearly');
 //console.log(Sam);
-
+let locUser = localStorage.getItem('user1');
+let userDeserelized = JSON.parse(locUser);
 let myForm = document.querySelector('#myForm');
 let myName = document.getElementById('name');
-let localName = localStorage.getItem('name');
-myName.value = localName;
+// let localName = localStorage.getItem('name');
+myName.value = userDeserelized.name;
 let myEmail = document.getElementById('email');
-let localEmail = localStorage.getItem('email');
-myEmail.value = localEmail;
+// let localEmail = localStorage.getItem('email');
+myEmail.value = userDeserelized.email;
 let errorMsg = document.querySelector('.errorMsg');
 let succMsg = document.querySelector('.succMsg');
+
+//saving object to local storage
 
 //console.log(myForm,myName,errorMsg);
 myForm.addEventListener('submit', (e) =>{
@@ -71,10 +81,15 @@ myForm.addEventListener('submit', (e) =>{
     }
     else
     {
-        console.log(`Data for User ${myName.value} with email ${myEmail.value} saved`);
-        localStorage.setItem('name',myName.value);
-        localStorage.setItem('email',myEmail.value);
-        succMsg.innerHTML = 'Data Saved Successfully';
+        // console.log(`Data for User ${myName.value} with email ${myEmail.value} saved`);
+        // localStorage.setItem('name',myName.value);
+        // localStorage.setItem('email',myEmail.value);
+        // succMsg.innerHTML = 'Data Saved Successfully';
+
+        //saving object to local storage
+        let newUser = new User(myName.value,myEmail.value);
+        let userSerelized = JSON.stringify(newUser);
+        localStorage.setItem('user1',userSerelized)
     }
 
 })
