@@ -6,8 +6,8 @@ let arr=[1,2,3];
 addNums.call(obj,1,2,3);
 addNums.apply(obj ,arr);
 
-let bound = addNums.bind(obj);
-bound(1,2,3);
+let bound = addNums.bind(obj,1);
+bound(2,3);
 
 let student1 = {age:22};
 let student2 = {age:25};
