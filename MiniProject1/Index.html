@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <div>
+        <form id="myForm" action="#">
+        <div>
+            <h1>Expense Tracking App</h1>
+        </div>
+        <div >
+            <text >Add your Expense Here</text>
+        </div>
+        <hr>
+        <div class="a" >
+            <label>Choose Expense Amount</label>
+            <br>
+            <input type="number" name="amount" id="amount" >
+            <br>
+            <label>Choose Description</label>
+            <br>
+            <input type="text" name="desc" id="desc">
+            <br>
+            <label>Choose a category</label>
+            <br>
+            <select name = 'category' id = 'category'>
+                <option value="Movie">Movie</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Shoping">Shoping</option>
+            </select>
+            <br>
+            <br>
+            <input type='submit' class = 'btn' value="Submit" >
+            <br>
+        </div>
+        </form>
+    </div>
+    <script src="expense.js"></script>   
+</body>
+</html>
