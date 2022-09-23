@@ -74,9 +74,22 @@ setTimeout(getPosts,500);
 //         })
 // .catch((err)=>console.log(err));
 let lastActivityTime;
-let promise1 = new Promise(()=>{
-    createPost({title:'Post four ', body: 'Post four using promise all'});
+let promise1 =  new Promise((resolve,reject)=>{
+    // setTimeout(()=>{
+    createPost({title:'Post four ', body: 'Post four using promise all'});  
+    resolve();  
+// },500);
+
 });
-let promise2 = new Promise(()=>{lastActivityTime = new Date()});
+let promise2 = new Promise((resolve,reject)=>{
+     setTimeout(()=>{
+        lastActivityTime = new Date();
+        resolve(lastActivityTime);
+    // 
+ },500);
+    });
+
+
 Promise.all([promise1,promise2]).then(console.log(lastActivityTime))
 // ({title:'Post Three', body: 'This is post three'})
+promise2.then((lastActivityTime)=>{console.log(`promise 2 resolved ${lastActivityTime} `)});
