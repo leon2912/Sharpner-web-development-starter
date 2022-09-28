@@ -14,42 +14,26 @@ for(let i=0;i<objkeys.length;i++)
 {
     let stringifiedDetailsOfPeople = localStorage.getItem(objkeys[i]);
     let detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
-    addItem(detailsOfPeople);
+    addItemOnScreen(detailsOfPeople);
 }
-//myName.value = userDeserelized.name;
-//myEmail.value = userDeserelized.email;
+
 myForm.addEventListener('submit', (e) =>{
     e.preventDefault();
         let newUser = new User(myName.value,myEmail.value);
-        let userSerelized = JSON.stringify(newUser);
-        localStorage.setItem(newUser.email,userSerelized)
-        addItem(newUser);
+        axios.post("https://crudcrud.com/api/ba4b516cd2064a9c92a799621f9980e6/appointmentData",newUser)
+        .then((res)=>{addItemOnScreen(res.data);
+                    console.log(res)})
+        .catch((err)=>{console.log('something went Wrong')})
     }
 )
 
-function addItem(newUser){
-  
-    // Get input value
-    //var newItem = document.getElementById('item').value;
-    let locUser = localStorage.getItem(newUser.email);
-    let userDeserelized = JSON.parse(locUser);
-    var newItem = userDeserelized.name;
-    var newItem2 = userDeserelized.email;
-    // Create new li element
-    if(localStorage.getItem(newUser.email) != null)
-    {
-        let childToBeDeleted = document.getElementById(newItem2);
-        console.log(childToBeDeleted);
-        if(childToBeDeleted != null){
-        myForm.removeChild(childToBeDeleted);
-        }
-    }
+function addItemOnScreen(newUser){
+
     var li = document.createElement('li');
-    // Add class
     li.className = 'list-group-item';
-    li.id = newItem2;
-    li.appendChild(document.createTextNode(newItem));
-    li.appendChild(document.createTextNode(`      ${newItem2}`));
+    li.id = newUser.id;
+    li.appendChild(document.createTextNode(newUser.name));
+    li.appendChild(document.createTextNode(`      ${newUser.email}`));
     var deleteBtn = document.createElement('button');
     deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
     deleteBtn.appendChild(document.createTextNode('X'));
