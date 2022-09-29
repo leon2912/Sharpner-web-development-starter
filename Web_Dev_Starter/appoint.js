@@ -25,25 +25,33 @@ myForm.addEventListener('submit', (e) =>{
 )
 
 function addItemOnScreen(newUser){
-
+    console.log(newUser);
     var li = document.createElement('li');
     li.className = 'list-group-item';
-    li.id = newUser.id;
+    // console.log(newUser.id);
+    li.id = newUser._id;
     li.appendChild(document.createTextNode(newUser.name));
     li.appendChild(document.createTextNode(`      ${newUser.email}`));
     var deleteBtn = document.createElement('button');
     deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
-    deleteBtn.appendChild(document.createTextNode('X'));
+    deleteBtn.appendChild(document.createTextNode('Delete'));
     li.appendChild(deleteBtn);
     //let Form = document.querySelector('#myForm');
     myForm.appendChild(li);
+    console.log(myForm);
     deleteBtn.addEventListener('click',(e) => {
         e.preventDefault();
         if(e.target.classList.contains('delete')){
             if(confirm('Are You Sure?')){
               var li = e.target.parentElement;
-              myForm.removeChild(li);
-              localStorage.removeItem(li.id);
+              console.log(li);
+              let baseURL = 'https://crudcrud.com/api/ba4b516cd2064a9c92a799621f9980e6/appointmentData';
+              let delURL = `${baseURL}/${li.id}`;
+            //   console.log(delURL);
+              axios.delete(delURL)
+              .then(()=>{myForm.removeChild(li);})
+              .catch((res)=>{console.log(res)})
+              
             }
           }
       })
