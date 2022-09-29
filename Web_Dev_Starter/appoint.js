@@ -9,13 +9,10 @@ class User{
 let myName = document.getElementById('name');
 let myEmail = document.getElementById('email');
 
-let objkeys = Object.keys(localStorage);
-for(let i=0;i<objkeys.length;i++)
-{
-    let stringifiedDetailsOfPeople = localStorage.getItem(objkeys[i]);
-    let detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
-    addItemOnScreen(detailsOfPeople);
-}
+// let objkeys = Object.keys(localStorage);
+axios.get("https://crudcrud.com/api/ba4b516cd2064a9c92a799621f9980e6/appointmentData")
+.then((res)=>{console.log(res.data);loadInitialScreen(res.data)})
+.catch((err)=>{console.log('Error in Fetching Appointment Data')})
 
 myForm.addEventListener('submit', (e) =>{
     e.preventDefault();
@@ -50,4 +47,12 @@ function addItemOnScreen(newUser){
             }
           }
       })
+  }
+
+  function loadInitialScreen(appointments){
+    for(let i=0;i<appointments.length;i++)
+    {
+        addItemOnScreen(appointments[i]);
+    }
+
   }
