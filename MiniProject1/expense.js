@@ -12,71 +12,84 @@ let amount = document.getElementById('amount');
 let desc = document.getElementById('desc'); 
 let category = document.getElementById('category'); 
 
+
+displayInitialScreen();
+
+
 myForm.addEventListener('submit',(e)=>{
     e.preventDefault();
     let new_expense = new expense(amount.value,desc.value,category.value);
-    let expSerelized = JSON.stringify(new_expense);
-    let locExpense = localStorage.getItem(desc.value);
-    if(locExpense == null)
-    {
     addItem(new_expense);
-    }
-    localStorage.setItem(new_expense.desc,expSerelized);
 })
-displayItems();
+
+
+
 
 function addItem(new_expense){
     //Add item to dom
-    var li = document.createElement('li');
+    axios.post('https://crudcrud.com/api/6ae93437248d45d0a1cf962cacfe6e8b/expense',new_expense)
+    .then((res)=>{displayItem(res.data)})
+    .catch((err)=>{console.log(err)})
+}
+
+function displayInitialScreen()
+{
+    axios.get('https://crudcrud.com/api/6ae93437248d45d0a1cf962cacfe6e8b/expense')
+    .then((res)=>{
+    let allExpenses = res.data; 
+    for(let i=0;i<allExpenses.length;i++){
+        displayItem(allExpenses[i]);
+    }})
+    .catch((err)=>{console.log(err)})  
+}
+
+function displayItem(expense)
+{   
+    let li = document.createElement('li');
     li.className = 'list-group-item';
-    li.id = new_expense.desc;
-    li.appendChild(document.createTextNode(`${new_expense.amount}  ${new_expense.desc}  ${new_expense.category} `));
+    li.id = expense._id;
     let deleteBtn = document.createElement('button');
     deleteBtn.className = 'delete';
     deleteBtn.appendChild(document.createTextNode('Delete'));
-    li.appendChild(deleteBtn);
+
     let editBtn = document.createElement('button');
     editBtn.className = 'edit';
     editBtn.appendChild(document.createTextNode('Edit'));
+
+    li.appendChild(document.createTextNode(`${expense.amount}  ${expense.desc}  ${expense.category} `));
+    li.appendChild(deleteBtn);
     li.appendChild(editBtn);
-    myForm.appendChild(li);
-    console.log(li);
-    // Event for Delete button
+    myForm.appendChild(li);   
+
     deleteBtn.addEventListener('click',(e) => {
         e.preventDefault();
         if(e.target.classList.contains('delete')){
             if(confirm('Are You Sure?')){
               var li = e.target.parentElement;
-              myForm.removeChild(li);
-              localStorage.removeItem(li.id);
+              let delURL = `https://crudcrud.com/api/6ae93437248d45d0a1cf962cacfe6e8b/expense/${li.id}` 
+              axios.delete(delURL)
+              .then((res)=>{myForm.removeChild(li)})
+              .catch((err)=>{console.log(err)})
             }
           }
       })
+
       editBtn.addEventListener('click',(e) => {
         e.preventDefault();
         if(e.target.classList.contains('edit')){
               var li = e.target.parentElement;
-              console.log(e.target.classList);
-              let locExpense = localStorage.getItem(li.id);
-              let expDeserelized = JSON.parse(locExpense);
-              console.log(expDeserelized);
-              amount.value = expDeserelized.amount;
-              desc.value = expDeserelized.desc;
-              category.value = expDeserelized.category;
-              localStorage.removeItem(li.id);
-              myForm.removeChild(li);
+              let updateURL = `https://crudcrud.com/api/6ae93437248d45d0a1cf962cacfe6e8b/expense/${li.id}` 
+              axios.get(updateURL)
+              .then((res)=>{
+                amount.value = res.data.amount;
+                desc.value =  res.data.desc;
+                category.value = res.data.category;
+                axios.delete(updateURL)
+                .then((res)=>{myForm.removeChild(li);})
+              })
+              .catch((err)=>{console.log(err)})  
             }
       })
-}
-
-function displayItems()
-{
-    let localKeys = Object.keys(localStorage); 
-    for(let i=0;i<localKeys.length;i++){
-    let locExpense = localStorage.getItem(localKeys[i]);
-    let expDeserelized = JSON.parse(locExpense);
-    addItem(expDeserelized);
-    }   
 }
 
 
