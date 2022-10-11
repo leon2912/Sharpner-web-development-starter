@@ -1,19 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const shopController = require('../controllers/shop.js');
+const contactController = require('../controllers/contact.js');
 
-router.get('/',(req,res,next)=>{
-    res.sendFile(path.join(__dirname,'../','views','shop.html'));   
-})
+router.get('/',shopController.getShopPage);
 
-router.get('/contact-us',(req,res,next)=>{
-    console.log('inside contact rote');
-    res.sendFile(path.join(__dirname,'../','views','contact.html'));   
-})
+router.get('/contact-us',contactController.getContactPage);
 
-router.post('/success',(req,res,next)=>{
-    console.log('inside secess route');
-    res.sendFile(path.join(__dirname,'../','views','success.html'));   
-})
+router.post('/success',contactController.getSuccessPage)
 
 module.exports = router;
