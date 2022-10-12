@@ -82,7 +82,7 @@ function addItemOnScreen(newUser){
                         myEmail.value = res.data.email;
                         axios.delete(getURL)
                         .then(()=>{myForm.removeChild(li);})
-             })
+                        
             .catch((err)=>{console.log('Error in Fetching Appointment Data')})
             //   let baseURL = 'https://crudcrud.com/api/ba4b516cd2064a9c92a799621f9980e6/appointmentData';
             //   let updateURL = `${baseURL}/${li.id}`;

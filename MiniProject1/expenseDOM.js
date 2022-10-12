@@ -19,31 +19,35 @@ displayInitialScreen();
 myForm.addEventListener('submit', (e) => {
     e.preventDefault();
     let new_expense = new expense(amount.value, desc.value, category.value);
-    addItem(new_expense)
-        .then((res) => { console.log('Item created sucessfully'); myForm.reset(); })
-        .catch((err) => { console.log('Something Went wrong') })
+    addItem(new_expense);
 })
-
-
 
 
 async function addItem(new_expense) {
     //Add item to dom
-    let response = await axios.post(baseURL, new_expense);
-    displayItem(response.data)
-    console.log(response);
-    return response;
+    try {
+        let response = await axios.post(baseURL, new_expense);
+        displayItem(response.data)
+        console.log(response);
+        myForm.reset();
+        return response;
+    }
+    catch {
+        console.log('something went wrong');
+    }
 }
 
-function displayInitialScreen() {
-    axios.get(baseURL)
-        .then((res) => {
-            let allExpenses = res.data;
-            for (let i = 0; i < allExpenses.length; i++) {
-                displayItem(allExpenses[i]);
-            }
-        })
-        .catch((err) => { console.log(err) })
+async function displayInitialScreen() {
+    try {
+        let res = await axios.get(baseURL);
+        let allExpenses = res.data;
+        for (let i = 0; i < allExpenses.length; i++) {
+            displayItem(allExpenses[i]);
+        }
+    }
+    catch {
+        console.log('something went wrong');
+    }
 }
 
 function displayItem(expense) {
@@ -68,8 +72,6 @@ function displayItem(expense) {
         if (e.target.classList.contains('delete')) {
             if (confirm('Are You Sure?')) {
                 deleteItem(e)
-                    .then((res) => { console.log('Item Deleted Sucessfully') })
-                    .catch((err) => { console.log('Error in deleteing Item') })
             }
         }
     })
@@ -78,31 +80,37 @@ function displayItem(expense) {
         e.preventDefault();
         if (e.target.classList.contains('edit')) {
             updateItem(e)
-                .then((res) => { console.log('data Updated Sucessfully') })
-                .catch((err) => { console.log('Error In updating data') })
         }
     })
 }
 
 async function deleteItem(e) {
-
-    var li = e.target.parentElement;
-    let delURL = `${baseURL}/${li.id}`;
-    let response = await axios.delete(delURL);
-    myForm.removeChild(li);
-    console.log(response);
-    return response;
+    try {
+        var li = e.target.parentElement;
+        let delURL = `${baseURL}/${li.id}`;
+        let response = await axios.delete(delURL);
+        myForm.removeChild(li);
+        console.log(response);
+        return response;
+    }
+    catch {
+        console.log('something went wrong');
+    }
 }
 
 async function updateItem(e) {
-
-    var li = e.target.parentElement;
-    let updateURL = `${baseURL}/${li.id}`
-    let res = await axios.get(updateURL)
-    amount.value = res.data.amount;
-    desc.value = res.data.desc;
-    category.value = res.data.category;
-    let delRes = await deleteItem(e)
-    myForm.removeChild(li)
-    return delRes;
+    try {
+        var li = e.target.parentElement;
+        let updateURL = `${baseURL}/${li.id}`
+        let res = await axios.get(updateURL)
+        amount.value = res.data.amount;
+        desc.value = res.data.desc;
+        category.value = res.data.category;
+        let delRes = await deleteItem(e)
+        myForm.removeChild(li)
+        return delRes;
+    }
+    catch {
+        console.log('something went wrong');
+    }
 }
