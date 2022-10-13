@@ -29,3 +29,9 @@ exports.getProducts = (req, res, next) => {
     });
   });
 };
+
+module.exports.delProduct = (req,res,next) => {
+  let prodId = req.body.productId;
+  Product.delete(prodId);
+  res.redirect('/');
+};
