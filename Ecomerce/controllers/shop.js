@@ -3,10 +3,10 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
-    .then((result) => {
+  Product.findAll()
+    .then((products) => {
       res.render('shop/product-list', {
-        prods: result[0],
+        prods: products,
         pageTitle: 'All Products',
         path: '/products'
       });
@@ -16,11 +16,10 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(([row, fileData]) => {
-      console.log(row);
+  Product.findByPk(prodId)
+    .then((product) => {
       res.render('shop/product-detail', {
-        product: row[0],
+        product: product,
         pageTitle: product.title,
         path: '/products'
       });
@@ -31,10 +30,10 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-    .then(([rows, fileData]) => {
+  Product.findAll()
+    .then((products) => {
       res.render('shop/product-list', {
-        prods: rows,
+        prods: products,
         pageTitle: 'All Products',
         path: '/products'
       });
@@ -56,7 +55,7 @@ exports.postCart = (req, res, next) => {
   // });
   const prodId = req.body.productId;
   console.log(prodId);
-  Product.findById(prodId, (product) => {
+  Product.findByPk(prodId, (product) => {
     Cart.addProduct(prodId, product.price);
   })
   res.redirect('/cart');

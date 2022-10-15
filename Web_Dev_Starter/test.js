@@ -93,3 +93,5 @@ deleteBtn.addEventListener('click',(e) => {
 		  .catch((err)=>{console.log(err)})  
 		}
   })
+
+  

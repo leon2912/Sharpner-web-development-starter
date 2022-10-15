@@ -14,6 +14,8 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
+const sequelize = require('./util/database')
+
 // db.execute('select * from products').then((res)=>console.log(res[0])).catch((err)=>console.log(err));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,4 +26,8 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+sequelize.sync()
+.then((result)=>{console.log('table created');app.listen(3000);})
+.catch((err)=>{console.log(err)});
+
+
