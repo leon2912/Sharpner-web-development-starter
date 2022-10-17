@@ -18,7 +18,8 @@ exports.postAddProduct = (req, res, next) => {
   // const product = new Product(title, imageUrl, description, price);
   // product.save()
   console.log(imageUrl);
-  Product.create({
+  // Product.create({
+    req.user.createProduct({
     title: title,
     price: price,
     imageUrl: imageUrl,
@@ -31,7 +32,8 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  // Product.findAll()
+  req.user.getProducts()
     .then((products) => {
       res.render('admin/products', {
             prods: products,
