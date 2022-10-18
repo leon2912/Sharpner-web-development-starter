@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color:azure;
+    background-color: rebeccapurple;
+    font-family: inherit;
+    align-items: center;
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    min-height: 100vh;
+}
