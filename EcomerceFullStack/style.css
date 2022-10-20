@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+    /* margin: ; */
+    /* min-height: 100vh; */
+}
+
+nav {
+    background-color: rgb(25, 47, 94);
+    position:fixed;
+    top: 0;
+    display: flex; 
+    padding: 0px; 
+    width: 100%;
+    justify-content: center;
+    z-index: 1;
+   
+    
+}
+header{
+    left: 0px;
+    right: 0px;
+}
+
+.header{
+    position:absolute;
+    justify-content: center;
+    top:50px;
+    text-align: center;
+    width: 100%;
+    right: 0px;
+    background-color: rgb(235, 228, 32);
+}
+
+
+
+nav ul {
+    padding-left: 20px;
+    list-style-type: none;
+    overflow: hidden;
+}
+
+nav ul li {
+    padding: 0rem; 
+    display:inline-block;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size:20px;
+    padding-right:30px; 
+}
+
+.image-container{
+    height: 250px;
+    width: 250px;
+    overflow: hidden;
+}
+
+img{
+    transform-origin: center center;
+    object-fit:cover;
+    height: 100%;
+    width: 100%;
+    padding:0px;
+    margin:0px;
+    filter: brightness(100%);
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    justify-content: left; 
+    align-items: stretch;
+    position: relative; 
+  }
+
+.card{
+    padding: 35px;
+    /* text-align: center; */
+    overflow: hidden;
+}
+
+.card-title{
+    font-family: inherit;
+    font-weight:bold;
+}
+
+.card-price{
+    font-family: inherit;
+    font-weight:bold;
+}
+
+.category1{
+    color: rgb(19, 28, 28);
+    text-align: center;
+    font-family: inherit;
+    font-size: 35px;
+    /* margin-top: 80px; */
+}
+
+.category2{
+    color: rgb(19, 28, 28);
+    text-align: center;
+    font-family: inherit;
+    font-size: 35px;
+}
+.container{
+    margin-top: 150px;
+    position: relative;
+}
+
+.shop-item-button{
+    padding: 0.5rem;
+    background-color: rgb(25, 47, 94);
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+.image-container:hover img{
+    transform: scale(1.5);
+    filter: brightness(130%); 
+}
