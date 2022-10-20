@@ -44,3 +44,22 @@ exports.getExpenses = (req, res, next) => {
       })
       .catch((err) => { console.log(err) });
   };
+
+  exports.updateExpense = (req, res, next) => {
+    const expenseId = req.params.expenseid;
+    const amount =  req.body.amount;
+    const desc = req.body.desc;
+    const category = req.body.category;
+    Expense.findByPk(expenseId)
+    .then((expense)=>{
+      expense.amount = amount;
+      expense.desc = desc;
+      expense.category = category;
+      return expense.save();
+    })
+    .then((result)=>{res.json(result);})
+    .catch((err)=>{
+      console.log(err);
+    });
+  };
+
