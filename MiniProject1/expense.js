@@ -12,14 +12,26 @@ let desc = document.getElementById('desc');
 let category = document.getElementById('category');
 let baseURL = 'http://localhost:3000/expense';
 
+let updated = false;
+let updatedItemId = 0;
+
+
 
 displayInitialScreen();
 
 
 myForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     let new_expense = new expense(amount.value, desc.value, category.value);
+    if(updated == false){
     addItem(new_expense);
+    }
+    else
+    {
+        console.log('record was updated');
+        update(new_expense);
+        updated = false;
+    }
 })
 
 
@@ -44,6 +56,21 @@ async function displayInitialScreen() {
         for (let i = 0; i < allExpenses.length; i++) {
             displayItem(allExpenses[i]);
         }
+    }
+    catch {
+        console.log('something went wrong');
+    }
+}
+
+async function update(new_expense) {
+    //Add item to dom
+    try {
+        let updateURL = `${baseURL}/${updatedItemId}`
+        let response = await axios.put(updateURL, new_expense);
+        displayItem(response.data)
+        console.log(response);
+        myForm.reset();
+        return response;
     }
     catch {
         console.log('something went wrong');
@@ -105,8 +132,10 @@ async function updateItem(e) {
         amount.value = liValues[0];
         desc.value = liValues[1];
         category.value = liValues[2].split(" ")[0];
-        let delRes = await deleteItem(e)
-        myForm.removeChild(li)
+        // let delRes = await deleteItem(e);
+        updated = true;
+        updatedItemId = li.id; 
+        myForm.removeChild(li);
         return delRes;
     }
     catch {
