@@ -327,3 +327,10 @@ ul li a{
 .footer h1{
     padding-left: 40px;
 } 
+
+#notification{
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    background-color: rgb(73, 219, 73);
+}

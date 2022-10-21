@@ -34,7 +34,7 @@ parentContainer.addEventListener('click',(e)=>{
         </span>`
         cart_items.appendChild(cart_item)
 
-        const container = document.getElementById('cart');
+        const container = document.getElementById('notification');
         const notification = document.createElement('div');
         notification.classList.add('notification');
         notification.innerHTML = `<h4>Your Product : <span>${name}</span> is added to the cart<h4>`;
