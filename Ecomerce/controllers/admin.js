@@ -35,11 +35,12 @@ exports.getProducts = (req, res, next) => {
   // Product.findAll()
   req.user.getProducts()
     .then((products) => {
-      res.render('admin/products', {
-            prods: products,
-            pageTitle: 'Admin Products',
-            path: '/admin/products'
-      });
+      // res.render('admin/products', {
+      //       prods: products,
+      //       pageTitle: 'Admin Products',
+      //       path: '/admin/products'
+      // });
+      res.json(products);
     })
     .catch((err) => { console.log(err) });
 };
