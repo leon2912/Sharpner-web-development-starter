@@ -9,7 +9,7 @@ exports.getProducts = (req, res, next) => {
       //   pageTitle: 'All Products',
       //   path: '/products'
       // });
-      res.json({products:products,success:true});
+      res.json({ products: products, success: true });
     })
     .catch(err => {
       console.log(err);
@@ -56,14 +56,14 @@ exports.getCart = (req, res, next) => {
   req.user
     .getCart()
     .then(cart => {
-      return cart
-        .getProducts()
+      return cart.getProducts()
         .then(products => {
-          res.render('shop/cart', {
-            path: '/cart',
-            pageTitle: 'Your Cart',
-            products: products
-          });
+          // res.render('shop/cart', {
+          //   path: '/cart',
+          //   pageTitle: 'Your Cart',
+          //   products: products
+          // });
+          res.json(products);
         })
         .catch(err => console.log(err));
     })
@@ -99,10 +99,10 @@ exports.postCart = (req, res, next) => {
       });
     })
     .then(() => {
-      res.status(200).json({success:true, message: 'Item Added Successfully'})
+      res.status(200).json({ success: true, message: 'Item Added Successfully' })
     })
-    // .catch(err => console.log(err));
-    .catch(()=>{res.status(500).json({success:false, message: 'Error Occured while adding Product to cart'})});
+    .catch(err => console.log(err));
+    // .catch(() => { res.status(500).json({ success: false, message: 'Error Occured while adding Product to cart' }) });
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
