@@ -4,28 +4,28 @@ const Cart = require('../models/cart');
 exports.getProducts = (req, res, next) => {
   const page = req.query.page;
   Product.count()
-  .then((count)=>{
-  let limit = 1;
-  let offset = (page-1)*limit;
-  Product.findAll({offset:offset,limit:limit})
-    .then(products => {
-      // res.render('shop/product-list', {
-      //   prods: products,
-      //   pageTitle: 'All Products',
-      //   path: '/products'
-      // });
-      res.json({ 
-        products: products, 
-        success: true,
-        currPage: page,
-        hasNext: count>page*limit,
-        hasPrev: page>1, 
-      });
-    })
-    .catch(err => {
-      console.log(err);
+    .then((count) => {
+      let limit = 1;
+      let offset = (page - 1) * limit;
+      Product.findAll({ offset: offset, limit: limit })
+        .then(products => {
+          // res.render('shop/product-list', {
+          //   prods: products,
+          //   pageTitle: 'All Products',
+          //   path: '/products'
+          // });
+          res.json({
+            products: products,
+            success: true,
+            currPage: page,
+            hasNext: count > page * limit,
+            hasPrev: page > 1,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     });
-  });
 };
 
 exports.getProduct = (req, res, next) => {
@@ -114,7 +114,7 @@ exports.postCart = (req, res, next) => {
       res.status(200).json({ success: true, message: 'Item Added Successfully' })
     })
     .catch(err => console.log(err));
-    // .catch(() => { res.status(500).json({ success: false, message: 'Error Occured while adding Product to cart' }) });
+  // .catch(() => { res.status(500).json({ success: false, message: 'Error Occured while adding Product to cart' }) });
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
@@ -146,4 +146,31 @@ exports.getCheckout = (req, res, next) => {
     path: '/checkout',
     pageTitle: 'Checkout'
   });
+};
+
+
+exports.postOrder = (req, res, next) => {
+  // const prodId = req.body.productId;
+  let fetchedCart;
+  let newQuantity = 1;
+  req.user
+    .getCart()
+    .then(cart => {
+      fetchedCart = cart;
+      // return cart.getProducts({ where: { id: prodId } });
+      return cart.getProducts();
+    })
+    .then(products => {
+      req.user.createOrder()
+        .then(order => {
+          products.forEach((product) => {
+            order.addProduct(product, { through: { quantity: product.cartItem.quantity } })
+          })
+          return order.id;
+        })
+        .then((orderId) => {
+          res.status(200).json({ success: true, message: 'ORder Placed Successfully', orderID: orderId })
+        })
+    })
+    .catch(err => console.log(err));
 };

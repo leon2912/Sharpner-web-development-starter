@@ -172,6 +172,20 @@ parentContainer.addEventListener('click', (e) => {
         }
 
     }
+
+    if (e.target.className == 'purchase-btn') {
+        axios.post(`http://localhost:3000/order`)
+            .then(res => {
+                console.log(e.target.parentNode);
+                const notification = document.createElement('div');
+                notification.classList.add('notification');
+                notification.innerHTML = `<h4>Your Order is Placed Sucessfully with Order ID : <span>${res.data.orderID}</span><h4>`;
+                e.target.parentNode.appendChild(notification);
+                setTimeout(() => {
+                    notification.remove();
+                }, 10000)
+            })
+    }
 });
 
 function addCartItem(e) {
