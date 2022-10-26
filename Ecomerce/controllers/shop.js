@@ -2,18 +2,30 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  const page = req.query.page;
+  Product.count()
+  .then((count)=>{
+  let limit = 1;
+  let offset = (page-1)*limit;
+  Product.findAll({offset:offset,limit:limit})
     .then(products => {
       // res.render('shop/product-list', {
       //   prods: products,
       //   pageTitle: 'All Products',
       //   path: '/products'
       // });
-      res.json({ products: products, success: true });
+      res.json({ 
+        products: products, 
+        success: true,
+        currPage: page,
+        hasNext: count>page*limit,
+        hasPrev: page>1, 
+      });
     })
     .catch(err => {
       console.log(err);
     });
+  });
 };
 
 exports.getProduct = (req, res, next) => {

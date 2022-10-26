@@ -337,3 +337,25 @@ ul li a{
     padding-left: 20px;
     padding-right: 20px;
 }
+
+.pages{
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.pages button{
+    background: rgb(14, 158, 45);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none ;
+    font-family: inherit;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.pages span{
+    font-family: inherit;
+    font-weight: bold;
+}

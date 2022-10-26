@@ -3,7 +3,7 @@ const parentContainer = document.getElementById('main-body');
 
 window.addEventListener('load', () => {
     console.log('Document Loaded');
-    axios.get('http://localhost:3000/products')
+    axios.get('http://localhost:3000/products?page=1')
         .then((res) => {
             console.log(res.data.products);
             const products = res.data.products;
@@ -25,6 +25,7 @@ window.addEventListener('load', () => {
                 grid.innerHTML += prodHtml;
             })
             displayCart();
+            showPagination(res.data);
         });
 });
 
@@ -108,34 +109,95 @@ parentContainer.addEventListener('click', (e) => {
     }
 
     if (e.target.className == 'cancel') {
-                document.querySelector('#cart').style = "display:none;"
-            }
+        document.querySelector('#cart').style = "display:none;"
+    }
+
+    if (e.target.className == 'page') {
+        // e.target.parentNode
+        let currentPage = document.querySelector('#curr-page').innerText;
+        if (e.target.id == 'next') {
+            let next = parseInt(currentPage) + 1;
+            axios.get(`http://localhost:3000/products?page=${next}`)
+                .then((res) => {
+                    const products = res.data.products;
+                    const grid = document.getElementById('grid');
+                    grid.innerHTML = '';
+                    products.forEach(product => {
+                        const prodHtml = `<div class="card" id="prod${product.id}">
+                                <div class="card-title">
+                                    <h4>${product.title}</h4>
+                                </div>
+                            <div class="image-container" id="imgs">
+                                 <img src="${product.imageUrl}"
+                             alt="" />
+                            </div>
+                            <div class="card-price">
+                                <p>${product.price}$</p>
+                                <button class="shop-item-button" type='button' id="${product.id}">ADD TO CART</button>
+                            </div>
+                            </div>`
+                        grid.innerHTML += prodHtml;
+                    })
+                    showPagination(res.data);
+                })
+
+        }
+        console.log(`Page ${e.target.id} selected`);
+        if (e.target.id == 'prev') {
+            let prev = parseInt(currentPage) - 1;
+            axios.get(`http://localhost:3000/products?page=${prev}`)
+                .then((res) => {
+                    const products = res.data.products;
+                    const grid = document.getElementById('grid');
+                    grid.innerHTML = '';
+                    products.forEach(product => {
+                        const prodHtml = `<div class="card" id="prod${product.id}">
+                                <div class="card-title">
+                                    <h4>${product.title}</h4>
+                                </div>
+                            <div class="image-container" id="imgs">
+                                 <img src="${product.imageUrl}"
+                             alt="" />
+                            </div>
+                            <div class="card-price">
+                                <p>${product.price}$</p>
+                                <button class="shop-item-button" type='button' id="${product.id}">ADD TO CART</button>
+                            </div>
+                            </div>`
+                        grid.innerHTML += prodHtml;
+                    })
+                    showPagination(res.data);
+                })
+
+        }
+
+    }
 });
 
-function addCartItem(e){
-                displayCart();
-                document.querySelector('.cart-number').innerText = parseInt(document.querySelector('.cart-number').innerText) + 1
-                sendNotification(name);
+function addCartItem(e) {
+    displayCart();
+    document.querySelector('.cart-number').innerText = parseInt(document.querySelector('.cart-number').innerText) + 1
+    sendNotification(name);
 }
 
-function sendNotification(name){
-                const container = document.getElementById('notification');
-                const notification = document.createElement('div');
-                notification.classList.add('notification');
-                notification.innerHTML = `<h4>Your Product : <span>${name}</span> is added to the cart<h4>`;
-                container.appendChild(notification);
-                setTimeout(() => {
-                    notification.remove();
-                }, 2500)
+function sendNotification(name) {
+    const container = document.getElementById('notification');
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerHTML = `<h4>Your Product : <span>${name}</span> is added to the cart<h4>`;
+    container.appendChild(notification);
+    setTimeout(() => {
+        notification.remove();
+    }, 2500)
 }
 
-function displayCart(){
+function displayCart() {
     axios.get('http://localhost:3000/cart')
-    .then((res)=>{
-      let items = res.data;
-      let total_items = 0;
-      cart_items.innerHTML = '';
-      items.forEach(item=>{
+        .then((res) => {
+            let items = res.data;
+            let total_items = 0;
+            cart_items.innerHTML = '';
+            items.forEach(item => {
                 const id = item.id;
                 const name = item.title;
                 const img_src = item.imageUrl;
@@ -155,7 +217,19 @@ function displayCart(){
                 <button>REMOVE</button>
                 </span>`
                 cart_items.appendChild(cart_item);
-      })
-      document.querySelector('.cart-number').innerText = total_items;             
-    })
+            })
+            document.querySelector('.cart-number').innerText = total_items;
+        })
+}
+
+function showPagination(data) {
+    let pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+    if (data.hasPrev) {
+        pagination.innerHTML = '<button class="page" id="prev">prev</button>';
+    }
+    pagination.innerHTML += `<span id="curr-page"> ${data.currPage} </span>`
+    if (data.hasNext) {
+        pagination.innerHTML += '<button class="page" id="next">next</button>';
+    }
 }
