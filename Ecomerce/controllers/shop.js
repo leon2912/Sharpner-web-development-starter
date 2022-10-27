@@ -118,7 +118,7 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+  const prodId = req.query.productId;
   req.user
     .getCart()
     .then(cart => {
@@ -129,16 +129,17 @@ exports.postCartDeleteProduct = (req, res, next) => {
       return product.cartItem.destroy();
     })
     .then(result => {
-      res.redirect('/cart');
+      res.json({message: `Item removed Successfully`});
     })
     .catch(err => console.log(err));
 };
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders'
-  });
+  req.user.getOrders()
+  .then(orders=>{
+    res.json(orders);
+  })
+  .catch(err=>console.log(err));
 };
 
 exports.getCheckout = (req, res, next) => {
@@ -173,4 +174,29 @@ exports.postOrder = (req, res, next) => {
         })
     })
     .catch(err => console.log(err));
+};
+
+exports.getOrderDetails = async (req, res, next) => {
+  let orderId = req.query.orderId;
+  console.log('inside Order Details');
+  try{
+  // req.user
+  //   .getOrders({ where: { id: orderId } })
+  //   .then(orders => {
+  //         const order = orders[0];
+  //         order.getProducts()
+  //         .then(products=>{
+  //           res.json(products);
+  //         })
+  //         .catch(err => console.log(err));
+  //       })
+  //       .catch(err => console.log(err));
+  let orders = await req.user.getOrders({ where: { id: orderId } });
+  const order = orders[0];
+  const products = await order.getProducts();
+  res.json(products);
+  }
+  catch{
+    res.json({message:"something went wrong"});
+  }
 };

@@ -263,6 +263,7 @@ img{
     height:30px;
     outline:none;
     padding: 0px 7px;
+    margin-left: 10px;
 }
 .cart-quantity button:hover{
     background: rgb(218, 37, 37);;
@@ -358,4 +359,43 @@ ul li a{
 .pages span{
     font-family: inherit;
     font-weight: bold;
+}
+
+.orders{
+    /* display: flex; */
+    position: absolute;
+    top: 140px;
+    left: 50px; 
+    border-right: 3px solid rgb(150, 26, 26);
+    height: 100%;
+  }
+
+.order-details{
+    position: absolute;
+    top: 160px;
+    left: 350px;
+    padding: 20px;  
+    background-color: rgb(255, 254, 243);
+    border: 1px solid;
+    display: none;
+    font-family: inherit;
+    border-radius: 10px;
+}
+
+.order-container{
+    font: inherit;
+    font-weight: bold;
+    padding-top: 25px;
+    padding-right: 50px;
+
+}
+
+.details-button{
+    background: rgb(26, 25, 81);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none ;
+    font-family: inherit;
+    margin-left: 50px;
 }

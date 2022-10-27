@@ -1,15 +1,17 @@
 const cart_items = document.querySelector('#cart .cart-items');
 const parentContainer = document.getElementById('main-body');
+const ordersContainer = document.getElementById('orders');
 
 window.addEventListener('load', () => {
     console.log('Document Loaded');
-    axios.get('http://localhost:3000/products?page=1')
-        .then((res) => {
-            console.log(res.data.products);
-            const products = res.data.products;
-            const grid = document.getElementById('grid');
-            products.forEach(product => {
-                const prodHtml = `<div class="card" id="prod${product.id}">
+    if (window.location.href.includes('store.html')) {
+        axios.get('http://localhost:3000/products?page=1')
+            .then((res) => {
+                console.log(res.data.products);
+                const products = res.data.products;
+                const grid = document.getElementById('grid');
+                products.forEach(product => {
+                    const prodHtml = `<div class="card" id="prod${product.id}">
                                 <div class="card-title">
                                     <h4>${product.title}</h4>
                                 </div>
@@ -22,11 +24,26 @@ window.addEventListener('load', () => {
                                 <button class="shop-item-button" type='button' id="${product.id}">ADD TO CART</button>
                             </div>
                             </div>`
-                grid.innerHTML += prodHtml;
+                    grid.innerHTML += prodHtml;
+                })
+                displayCart();
+                showPagination(res.data);
+            });
+    }
+    if (window.location.href.includes('orders.html')) {
+        const ordersContainer = document.getElementById('orders');
+        ordersContainer.innerHTML = '';
+        axios.get('http://localhost:3000/orders')
+            .then((res) => {
+                let orders = res.data;
+                orders.forEach(order => {
+                    ordersContainer.innerHTML += `<div id='order${order.id}' class='order-container'>
+                                                  <span>Order ${order.id}</span>
+                                                  <button class='details-button' id='${order.id}'>Details</button>
+                                                  </div>`
+                })
             })
-            displayCart();
-            showPagination(res.data);
-        });
+    }
 });
 
 
@@ -186,6 +203,17 @@ parentContainer.addEventListener('click', (e) => {
                 }, 10000)
             })
     }
+
+    if (e.target.innerText == 'REMOVE'){
+        let prodId = e.target.parentNode.parentNode.id;
+        axios.delete(`http://localhost:3000/cart?productId=${prodId}`)
+        .then(res=>{
+            console.log(res);
+            e.target.parentNode.parentNode.remove();
+
+        })
+        .catch(err=>{console.log(err)})
+    }
 });
 
 function addCartItem(e) {
@@ -219,15 +247,14 @@ function displayCart() {
                 const cart_item = document.createElement('div');
                 total_items = total_items + item.cartItem.quantity;
                 cart_item.classList.add('cart-row');
-                cart_item.setAttribute('id', `in-cart-${id}`);
+                cart_item.setAttribute('id', `${id}`);
                 cart_item.innerHTML = `
                 <span class='cart-item cart-column'>
                 <img class='cart-img' src="${img_src}" alt="">
                 <span>${name}</span>
                 </span>
                 <span class='cart-price cart-column'>${price}</span>
-                <span class='cart-quantity cart-column'>
-                <input type="text" value="${item.cartItem.quantity}">
+                <span class='cart-quantity cart-column'>${item.cartItem.quantity}
                 <button>REMOVE</button>
                 </span>`
                 cart_items.appendChild(cart_item);
@@ -247,3 +274,31 @@ function showPagination(data) {
         pagination.innerHTML += '<button class="page" id="next">next</button>';
     }
 }
+
+ordersContainer.addEventListener('click', (e) => {
+    console.log(e.target.id);
+    const orderDetails = document.getElementById('order-details');
+    orderDetails.style = "display:none;";
+    orderDetails.innerHTML = '';
+    let orderHtml = `<h2>Order ${e.target.id} Details</h2>`
+    axios.get(`http://localhost:3000/orderDetails?orderId=${e.target.id}`)
+    .then(response=>{
+        let products = response.data;
+        products.forEach((product)=>{
+         orderHtml += `<div class="cart-row">
+         <span class='cart-item cart-column'>
+         <img class='cart-img' src="${product.imageUrl}" alt="">
+         <span>${product.title}</span>
+         </span>
+         <span class='cart-price cart-column'>${product.price}</span>
+         <span class='cart-quantity cart-column'>
+         <span class='cart-price cart-column'>${product.orderItem.quantity}</span>
+         </span>
+        </div>`   
+        })
+        orderDetails.innerHTML = orderHtml;
+        orderDetails.style = "display:block;";
+    }) 
+})
+
+// in-cart-
