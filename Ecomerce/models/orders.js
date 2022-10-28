@@ -9,6 +9,7 @@ const Order = sequelize.define('order', {
     allowNull: false,
     primaryKey: true
   },
+  totalCost: Sequelize.INTEGER
 });
 
 module.exports = Order;

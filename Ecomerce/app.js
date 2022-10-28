@@ -61,13 +61,13 @@ sequelize
   })
   .then(user => {
     if (!user) {
-      return User.create({ name: 'Max', email: 'test@test.com' });
+      User.create({ name: 'Max', email: 'test@test.com' })
+      .then(user => {
+        user.createCart({totalCost:00});
+        return user;
+      });
     }
     return user;
-  })
-  .then(user => {
-    // console.log(user);
-    return user.createCart();
   })
   .then(cart => {
     app.listen(3000);

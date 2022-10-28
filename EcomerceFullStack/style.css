@@ -285,7 +285,7 @@ img{
     justify-content: center;
     margin:auto;
     margin-top: 50px;
-    background: #56CCF2;
+    background: #17356f;
     color:white;
     font-size:1.2rem;
     font-weight: bold;
@@ -398,4 +398,23 @@ ul li a{
     border: none ;
     font-family: inherit;
     margin-left: 50px;
+}
+
+.total-cost{
+    font-weight: bold;
+    padding: 15px;
+    text-align: right;
+    font-family: inherit;
+    margin-right: 25px;
+}
+
+.value{
+    margin-left: 20px;
+}
+
+.notification{
+    background-color: rgb(31, 250, 31);
+    color: rgb(14, 14, 56);
+    border-radius: 2px;
+
 }

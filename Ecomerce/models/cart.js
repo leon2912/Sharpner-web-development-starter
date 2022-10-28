@@ -8,7 +8,8 @@ const Cart = sequelize.define('cart', {
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
-  }
+  },
+  totalCost: Sequelize.INTEGER
 });
 
 module.exports = Cart;
