@@ -18,7 +18,7 @@ app.use('/user', userRoutes);
 
 
 sequelize
-// .sync()
-.sync({ force: true })
+.sync()
+// .sync({ force: true })
 .then((result)=>{console.log('success')});
 app.listen(3000);
