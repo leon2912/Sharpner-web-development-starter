@@ -2,11 +2,9 @@ const cart_items = document.querySelector('#cart .cart-items');
 const parentContainer = document.getElementById('main-body');
 const ordersContainer = document.getElementById('orders');
 
-window.addEventListener('load', () => {
-    console.log('Document Loaded');
+window.addEventListener('load', async () => {
     if (window.location.href.includes('store.html')) {
-        axios.get('http://localhost:3000/products?page=1')
-            .then((res) => {
+        let res = await axios.get('http://localhost:3000/products?page=1')
                 console.log(res.data.products);
                 const products = res.data.products;
                 const grid = document.getElementById('grid');
@@ -28,7 +26,6 @@ window.addEventListener('load', () => {
                 })
                 displayCart();
                 showPagination(res.data);
-            });
     }
     if (window.location.href.includes('orders.html')) {
         const ordersContainer = document.getElementById('orders');
@@ -236,5 +233,3 @@ ordersContainer.addEventListener('click', (e) => {
     }) 
 })
 }
-
-// in-cart-
