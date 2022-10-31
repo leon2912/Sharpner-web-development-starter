@@ -18,10 +18,10 @@ form.addEventListener('submit', async (e)=>{
     try{
     let newUSer = new user('leon', email.value, password.value);
     let response = await axios.post('http://localhost:3000/user/login', newUSer)
-    window.alert('User Logged in Successfully')
+    window.location.replace('http://127.0.0.1:5500/MiniProject1/expense.html');
     }
     catch(err){
-        console.log(err.response);
+        console.log(err);
         message = err.response.data.message;
         msgContainer.innerText = message;   
     }

@@ -1,12 +1,14 @@
 .SignUp{
   margin: auto;
+  position: relative;
+  top:75px;
   width: 30%;
   height: 50%;
   border: 3px solid rgb(0, 36, 153);
   padding: 10px;
   text-align: center;
   border-radius: 10px;
-  background-color: rgb(126, 126, 212);
+  background-color: rgb(149, 179, 244);
 }
 
 .form{

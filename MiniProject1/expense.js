@@ -142,3 +142,10 @@ async function updateItem(e) {
         console.log('something went wrong');
     }
 }
+
+addBtn = document.getElementById('add-btn');
+addBtn.addEventListener('click',(e)=>{
+    console.log(e.target);
+    myForm.classList.toggle("active");
+    // myForm.style = "display:block";    
+})
