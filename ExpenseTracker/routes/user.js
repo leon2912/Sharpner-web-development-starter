@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/user');
 
 router.post('/signup',userController.addUser);
-router.post('/login',userController.checkUser);
+router.post('/login',userController.loginUser);
 // router.delete('/:expenseid',ExpenseController.deleteExpense);
 // router.put('/:expenseid',ExpenseController.updateExpense);
 // router.get('/:expenseid',ExpenseController.getExpense);

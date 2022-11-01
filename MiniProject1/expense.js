@@ -7,6 +7,7 @@ class expense {
 }
 
 document.getElementById('myForm');
+let expenseContainer = document.getElementById('expense-container');
 let amount = document.getElementById('amount');
 let desc = document.getElementById('desc');
 let category = document.getElementById('category');
@@ -21,13 +22,12 @@ displayInitialScreen();
 
 
 myForm.addEventListener('submit', (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     let new_expense = new expense(amount.value, desc.value, category.value);
-    if(updated == false){
-    addItem(new_expense);
+    if (updated == false) {
+        addItem(new_expense);
     }
-    else
-    {
+    else {
         console.log('record was updated');
         update(new_expense);
         updated = false;
@@ -38,20 +38,22 @@ myForm.addEventListener('submit', (e) => {
 async function addItem(new_expense) {
     //Add item to dom
     try {
-        let response = await axios.post(baseURL, new_expense);
+        let token = localStorage.getItem('userToken');
+        let response = await axios.post(baseURL, new_expense,{headers:{Authorization: token}});
         displayItem(response.data)
         console.log(response);
         myForm.reset();
         return response;
     }
-    catch {
-        console.log('something went wrong');
+    catch (err) {
+        console.log(err);
     }
 }
 
 async function displayInitialScreen() {
     try {
-        let res = await axios.get(baseURL);
+        let token = localStorage.getItem('userToken');
+        let res = await axios.get(baseURL,{headers:{Authorization: token}});
         let allExpenses = res.data;
         for (let i = 0; i < allExpenses.length; i++) {
             displayItem(allExpenses[i]);
@@ -65,8 +67,9 @@ async function displayInitialScreen() {
 async function update(new_expense) {
     //Add item to dom
     try {
+        let token = localStorage.getItem('userToken');
         let updateURL = `${baseURL}/${updatedItemId}`
-        let response = await axios.put(updateURL, new_expense);
+        let response = await axios.put(updateURL, new_expense,{headers:{Authorization: token}});
         displayItem(response.data)
         console.log(response);
         myForm.reset();
@@ -81,19 +84,17 @@ function displayItem(expense) {
     let li = document.createElement('li');
     li.className = 'list-group-item';
     li.id = expense.id;
-    let deleteBtn = document.createElement('button');
-    deleteBtn.className = 'btn btn-danger delete';
-    deleteBtn.appendChild(document.createTextNode('Delete'));
 
-    let editBtn = document.createElement('button');
-    editBtn.className = 'btn btn-primary edit';
-    editBtn.appendChild(document.createTextNode('Edit'));
+    li.innerHTML = `<span id=amount${expense.id}>Amount-${expense.amount}</span><br>
+                    <span id=desc${expense.id}>Description-${expense.desc}</span><br>
+                    <span id=category${expense.id}>Category-${expense.category}</span><br>
+                    <button class='btn btn-danger delete' id='deleteBtn'>Delete</button>
+                    <button class='btn btn-primary edit' id='editBtn'>Edit</button>
+                    <hr>`
+    expenseContainer.appendChild(li);
 
-    li.appendChild(document.createTextNode(`${expense.amount} - ${expense.desc} - ${expense.category} `));
-    li.appendChild(deleteBtn);
-    li.appendChild(editBtn);
-    myForm.appendChild(li);
 
+    let deleteBtn = document.getElementById('deleteBtn');
     deleteBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (e.target.classList.contains('delete')) {
@@ -103,6 +104,7 @@ function displayItem(expense) {
         }
     })
 
+    let editBtn = document.getElementById('editBtn');
     editBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (e.target.classList.contains('edit')) {
@@ -113,11 +115,11 @@ function displayItem(expense) {
 
 async function deleteItem(e) {
     try {
+        let token = localStorage.getItem('userToken');
         var li = e.target.parentElement;
         let delURL = `${baseURL}/${li.id}`;
-        let response = await axios.delete(delURL);
-        myForm.removeChild(li);
-        console.log(response);
+        let response = await axios.delete(delURL,{headers:{Authorization: token}});
+        expenseContainer.removeChild(li);
         return response;
     }
     catch {
@@ -128,24 +130,23 @@ async function deleteItem(e) {
 async function updateItem(e) {
     try {
         var li = e.target.parentElement;
-        let liValues = li.textContent.split(" - ");
-        amount.value = liValues[0];
-        desc.value = liValues[1];
-        category.value = liValues[2].split(" ")[0];
-        // let delRes = await deleteItem(e);
+        let id = e.target.parentNode.id;
+        amount.value = document.getElementById(`amount${id}`).innerText.split('-')[1];
+        desc.value = document.getElementById(`desc${id}`).innerText.split('-')[1];
+        category.value = document.getElementById(`category${id}`).innerText.split('-')[1];
         updated = true;
-        updatedItemId = li.id; 
-        myForm.removeChild(li);
+        updatedItemId = li.id;
+        expenseContainer.removeChild(li);
+        myForm.classList.toggle("active");
         return delRes;
     }
-    catch {
-        console.log('something went wrong');
+    catch(err) {
+        console.log(err);
     }
 }
 
 addBtn = document.getElementById('add-btn');
-addBtn.addEventListener('click',(e)=>{
+addBtn.addEventListener('click', (e) => {
     console.log(e.target);
-    myForm.classList.toggle("active");
-    // myForm.style = "display:block";    
+    myForm.classList.toggle("active");    
 })

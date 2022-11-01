@@ -99,12 +99,34 @@
         border: solid 1px rgb(22, 22, 73);
     }
 
+    .expense-container{
+        position: absolute;
+        color: rgb(0, 0, 0);
+        border-radius: 10px;
+        width: 40%;
+        padding: 10px;
+        background-color: rgb(182, 201, 242);
+        top: 50px;
+        left: 50px;
+    }
+
+    .expense-container li{
+        padding: 10px;
+    }
+
+    .expense-container button{
+        padding: 5px;
+    }
+
     
 </style>
 
 <body>
     <div class='main-body'>
         <input type="button" class='add-btn' id='add-btn' value="Add Expense">
+        <div class="expense-container" id="expense-container">
+            <div><h1>List of Expenses</h1><hr></div>
+        </div>
         <form id="myForm" action="#">
             <div>
                 <h1>Expense Tracking App</h1>
