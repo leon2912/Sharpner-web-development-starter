@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.addUser = async (req, res, next) => {
     try {
@@ -17,9 +18,9 @@ exports.addUser = async (req, res, next) => {
     }
 };
 
-exports.checkUser = async (req, res, next) => {
+exports.loginUser = async (req, res, next) => {
     try {
-        console.log("Inside login user")
+        console.log(req.User)
         const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
@@ -29,10 +30,10 @@ exports.checkUser = async (req, res, next) => {
         }
         else {
             let passCorrect = await bcrypt.compare(password,user[0].password);
-            console.log(passCorrect);
             if (passCorrect) {
-                res.status(200).json({ user: user, sucess: true });
-
+                console.log(user[0].id);
+                let token = jwt.sign(({userId:user[0].id}),'secretKey');
+                res.status(200).json({ user: user, sucess: true , token:token });
             }
             else {
                 res.status(401).json({ message: 'Invalid Password', sucess: false });
@@ -44,3 +45,7 @@ exports.checkUser = async (req, res, next) => {
         res.status(403).json(err);
     }
 };
+
+// async function signToken(user){
+//     let token = jwt.sign(({user:user.id}),'secretKey'); 
+// }
