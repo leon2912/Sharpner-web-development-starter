@@ -1,0 +1,46 @@
+.SignUp{
+  margin: auto;
+  position: relative;
+  top:75px;
+  width: 30%;
+  height: 50%;
+  border: 3px solid rgb(0, 36, 153);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgb(149, 179, 244);
+}
+
+.form{
+    padding: 20px;
+    padding-top: 10px;
+    text-align:justify;
+}
+
+label{
+    padding-top: 10px;
+    font-family: inherit;
+}
+
+.sub-btn{
+    padding: 10px;
+    background-color: rgb(34, 34, 69);
+    color: white;
+    border-radius: 5px;
+    margin-top: 25px;
+}
+
+hr{
+    padding: 0;
+}
+
+body{
+    background-image:url('/MiniProject1/background.jpg')
+}
+
+input{
+    border-radius: 5px;
+    box-shadow: 2px black;
+    background-color: rgb(241, 242, 231);
+    width: 80%;
+}

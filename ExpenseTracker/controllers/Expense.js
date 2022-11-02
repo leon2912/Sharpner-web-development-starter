@@ -6,17 +6,11 @@ exports.getExpenses = async (req, res, next) => {
   console.log(req.user.id);  
   let user = req.user;
   let expenses = await user.getExpenses()
-  res.json(expenses);
+  res.json({expenses:expenses,user:user});
   }
   catch(err){
     console.log(err);
   }
-
-  // Expense.findAll({where:{id:req.user.id}})
-  //     .then((expenses) => {
-  //       res.json(expenses);
-  //     })
-  //     .catch((err) => { console.log(err) });
   };
 
   exports.addExpense = (req, res, next) => {
@@ -24,12 +18,6 @@ exports.getExpenses = async (req, res, next) => {
     const amount =  req.body.amount;
     const desc = req.body.desc;
     const category = req.body.category;
-    // console.log(name,phone,email);
-    // Expense.create({
-    //   amount: amount,
-    //   desc: desc,
-    //   category: category,
-    // })
     user.createExpense({
         amount: amount,
         desc: desc,
