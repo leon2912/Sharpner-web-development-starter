@@ -12,7 +12,7 @@
 }
 
 .form{
-    padding: 20px;
+    padding: 2rem;
     padding-top: 10px;
     text-align:justify;
 }
@@ -43,4 +43,16 @@ input{
     box-shadow: 2px black;
     background-color: rgb(241, 242, 231);
     width: 80%;
+}
+
+.forgot-btn{
+    width:10rem;
+    background-color: rgb(38, 130, 56);
+    color:white;
+    text-align:justify;
+}
+
+.forgot-password{
+    text-align: left;
+    padding-left: 2rem;
 }
