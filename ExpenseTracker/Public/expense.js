@@ -8,6 +8,7 @@ class expense {
 
 document.getElementById('myForm');
 let expenseContainer = document.getElementById('expense-container');
+let leaderBoard = document.getElementById('leader-board');
 let amount = document.getElementById('amount');
 let desc = document.getElementById('desc');
 let category = document.getElementById('category');
@@ -18,7 +19,7 @@ let updatedItemId = 0;
 let token = localStorage.getItem('userToken');
 
 
-window.addEventListener('DOMContentLoaded', ()=>{
+window.addEventListener('DOMContentLoaded', () => {
     displayInitialScreen();
 })
 
@@ -42,7 +43,7 @@ async function addItem(new_expense) {
     //Add item to dom
     try {
         let token = localStorage.getItem('userToken');
-        let response = await axios.post(baseURL, new_expense,{headers:{Authorization: token}});
+        let response = await axios.post(baseURL, new_expense, { headers: { Authorization: token } });
         displayItem(response.data)
         console.log(response);
         myForm.reset();
@@ -56,9 +57,9 @@ async function addItem(new_expense) {
 async function displayInitialScreen() {
     try {
         let token = localStorage.getItem('userToken');
-        let res = await axios.get(baseURL,{headers:{Authorization: token}});
+        let res = await axios.get(baseURL, { headers: { Authorization: token } });
         let allExpenses = res.data.expenses;
-        if(res.data.user.ispremiumuser){
+        if (res.data.user.ispremiumuser) {
             document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/1595911.jpg')";
         };
         for (let i = 0; i < allExpenses.length; i++) {
@@ -75,7 +76,7 @@ async function update(new_expense) {
     try {
         let token = localStorage.getItem('userToken');
         let updateURL = `${baseURL}/${updatedItemId}`
-        let response = await axios.put(updateURL, new_expense,{headers:{Authorization: token}});
+        let response = await axios.put(updateURL, new_expense, { headers: { Authorization: token } });
         displayItem(response.data)
         console.log(response);
         myForm.reset();
@@ -124,7 +125,7 @@ async function deleteItem(e) {
         let token = localStorage.getItem('userToken');
         var li = e.target.parentElement;
         let delURL = `${baseURL}/${li.id}`;
-        let response = await axios.delete(delURL,{headers:{Authorization: token}});
+        let response = await axios.delete(delURL, { headers: { Authorization: token } });
         expenseContainer.removeChild(li);
         return response;
     }
@@ -146,7 +147,7 @@ async function updateItem(e) {
         myForm.classList.toggle("active");
         return delRes;
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
     }
 }
@@ -154,49 +155,95 @@ async function updateItem(e) {
 addBtn = document.getElementById('add-btn');
 addBtn.addEventListener('click', (e) => {
     console.log(e.target);
-    myForm.classList.toggle("active");    
+    myForm.classList.toggle("active");
 })
 
 document.getElementById('rzp-button1').onclick = async function (e) {
-    const response  = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: {"Authorization" : token} });
+    const response = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: { "Authorization": token } });
     console.log(response);
     var options =
     {
-     "key": response.data.key_id, // Enter the Key ID generated from the Dashboard
-     "name": "Test Company",
-     "order_id": response.data.order.id, // For one time payment
-     "prefill": {
-       "name": "Leon Falcao",
-       "email": "leon@gmail.com",
-       "contact": "7875294115"
-     },
-     "theme": {
-      "color": "#3399cc"
-     },
-     // This handler function will handle the success payment
-     "handler": function (response) {
-         console.log(response);
-         axios.post('http://localhost:3000/purchase/updatetransactionstatus',{
-             order_id: options.order_id,
-             payment_id: response.razorpay_payment_id,
-         }, { headers: {"Authorization" : token} }).then(() => {
-             alert('You are a Premium User Now')
-         }).catch(() => {
-             alert('Something went wrong. Try Again!!!')
-         })
-     },
-  };
-  const rzp1 = new Razorpay(options);
-  rzp1.open();
-  e.preventDefault();
+        "key": response.data.key_id, // Enter the Key ID generated from the Dashboard
+        "name": "Test Company",
+        "order_id": response.data.order.id, // For one time payment
+        "prefill": {
+            "name": "Leon Falcao",
+            "email": "leon@gmail.com",
+            "contact": "7875294115"
+        },
+        "theme": {
+            "color": "#3399cc"
+        },
+        // This handler function will handle the success payment
+        "handler": function (response) {
+            console.log(response);
+            axios.post('http://localhost:3000/purchase/updatetransactionstatus', {
+                order_id: options.order_id,
+                payment_id: response.razorpay_payment_id,
+            }, { headers: { "Authorization": token } }).then(() => {
+                alert('You are a Premium User Now')
+            }).catch(() => {
+                alert('Something went wrong. Try Again!!!')
+            })
+        },
+    };
+    const rzp1 = new Razorpay(options);
+    rzp1.open();
+    e.preventDefault();
 
-  rzp1.on('payment.failed', function (response){
-  alert(response.error.code);
-  alert(response.error.description);
-  alert(response.error.source);
-  alert(response.error.step);
-  alert(response.error.reason);
-  alert(response.error.metadata.order_id);
-  alert(response.error.metadata.payment_id);
- });
+    rzp1.on('payment.failed', function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+    });
 }
+
+document.getElementById('leader-button').onclick = async function (e) {
+    try {
+        const response = await axios.get('http://localhost:3000/user', { headers: { "Authorization": token } });
+        let users = response.data.users;
+        console.log(users);
+        leaderBoard.innerHTML = '<div><h1>Leader Board</h1><hr></div>'
+        users.forEach(user => {
+            let li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.id = user.id;
+            li.innerHTML = `<hr><span>Name-${user.name}</span><br>
+                        <span>Total Expense-${user.totalExpense}</span><br>
+                        <button id="details-button" class='btn btn-primary edit' onclick='displayDetails(this)'>Details</button>
+                        <div id='details${user.id}' class='details'><div>
+                        `
+            leaderBoard.appendChild(li)
+            leaderBoard.style.display = 'block';
+        });
+    }
+    catch (err) {
+        console.log(err);
+        if(err.response.status=='403'){
+            leaderBoard.innerHTML = '<div><h1>Leader Board</h1><hr></div>Only Premium users can access Leader Board';
+            leaderBoard.style.display = 'block';   
+        };
+    }
+}
+
+async function displayDetails(event){
+    let userId = event.parentNode.id;
+    const response = await axios.get(`http://localhost:3000/expense/premiumUser?userId=${userId}`)
+    let userExpenses = response.data.expenses;
+    let li = event.parentNode;
+    let details = document.getElementById(`details${userId}`)
+    details.innerHTML = '';
+    userExpenses.forEach((expense)=>{
+        details.innerHTML += `<div>Amount:${expense.amount}---Desc:${expense.desc}---Category:${expense.category} </div>`
+    })
+    console.log(li);
+
+}
+
+amount.value = document.getElementById(`amount${id}`).innerText.split('-')[1];
+        desc.value = document.getElementById(`desc${id}`).innerText.split('-')[1];
+        category.value = document.getElementById(`category${id}`).innerText.split('-')[1];

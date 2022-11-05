@@ -68,7 +68,7 @@
         display: none;
         top: 5rem;
         left: 2rem;
-        width: 30%;
+        width: 25%;
         border: 3px;
         border-style: double;
         border-color: hsl(252, 73%, 20%);
@@ -104,11 +104,11 @@
         position: absolute;
         color: rgb(0, 0, 0);
         border-radius: 10px;
-        width: 40%;
+        width: 35%;
         padding: 10px;
         background-color: rgb(182, 201, 242);
         top: 5rem;
-        right: 2rem;
+        right: 32rem;
     }
 
     .expense-container li{
@@ -122,7 +122,7 @@
     .premium-btn{
         position:absolute;
         top:1rem;
-        right: 2rem;
+        left: 10rem;
         background-color: rgb(243, 40, 40);
         padding: 10px;
         font-family: inherit;
@@ -130,6 +130,36 @@
         font-weight: bold;
         color: rgb(30, 30, 82);
         border:none;  
+    }
+
+    .leader-board{
+        position: absolute;
+        color: rgb(0, 0, 0);
+        border-radius: 10px;
+        width: 25%;
+        padding: 10px;
+        background-color: rgb(182, 201, 242);
+        top: 5rem;
+        right: 2rem;
+        display: none;
+    }
+
+    .leader-button{
+        position:absolute;
+        top:1rem;
+        left: 19rem;
+        background-color: rgb(243, 40, 40);
+        padding: 10px;
+        font-family: inherit;
+        border-radius: 5px;
+        font-weight: bold;
+        color: rgb(30, 30, 82);
+        border:none;  
+    }
+
+    .details{
+        text-align: justify;
+        font-weight: bold;
     }
 
     
@@ -140,6 +170,8 @@
         <input type="button" class='add-btn' id='add-btn' value="Add Expense">
         <div class="expense-container" id="expense-container">
             <div><h1>List of Expenses</h1><hr></div>
+        </div>
+        <div class="leader-board" id="leader-board">
         </div>
         <form id="myForm" action="#">
             <div>
@@ -179,6 +211,7 @@
         </form>
     </div>
     <button id="rzp-button1" class='premium-btn'>Buy Premium</button>
+    <button id="leader-button" class='leader-button'>Leader Board</button>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <script src="expense.js"></script>
