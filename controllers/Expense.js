@@ -18,12 +18,18 @@ exports.getExpenses = async (req, res, next) => {
     const amount =  req.body.amount;
     const desc = req.body.desc;
     const category = req.body.category;
+    console.log(user.totalExpense);
     user.createExpense({
         amount: amount,
         desc: desc,
         category: category,
       })
-    .then((result)=>{res.json(result);})
+    .then(
+      async (result)=>{
+        user.totalExpense = user.totalExpense + parseFloat(amount);
+        await user.save();
+        res.json(result);
+      })
     .catch((err)=>{
       console.log(err);
     });
@@ -72,3 +78,15 @@ exports.getExpenses = async (req, res, next) => {
     });
   };
 
+  exports.getUserExpenses = async (req, res, next) => {
+    try{
+    let userId = req.query.userId;
+    let user = await User.findByPk(userId);
+    console.log(user);
+    let expenses = await user.getExpenses()
+    res.json({expenses:expenses,user:user});
+    }
+    catch(err){
+      console.log(err);
+    }
+    };

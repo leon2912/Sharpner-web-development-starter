@@ -10,7 +10,7 @@ exports.addUser = async (req, res, next) => {
         const password = req.body.password;
         const hashedPassword = await bcrypt.hash(password,10);
         console.log(hashedPassword);
-        let user = await User.create({ name: name, email: email, password: hashedPassword })
+        let user = await User.create({ name: name, email: email, password: hashedPassword,ispremiumuser:false,totalExpense:0.0 })
         res.status(200).json({ user: user, sucess: true });
     }
     catch (err) {
@@ -20,7 +20,6 @@ exports.addUser = async (req, res, next) => {
 
 exports.loginUser = async (req, res, next) => {
     try {
-        console.log(req.User)
         const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
@@ -46,6 +45,22 @@ exports.loginUser = async (req, res, next) => {
     }
 };
 
-// async function signToken(user){
-//     let token = jwt.sign(({user:user.id}),'secretKey'); 
-// }
+exports.getUsers = async (req, res, next) => {
+    try {
+        if(req.user.ispremiumuser){
+        let users = await User.findAll({order:[["totalExpense","DESC"]]})
+        res.status(200).json({ users: users, sucess: true });
+        }
+        else{
+            res.status(403).json({ message:'No acess to view other user data. Please Buy premium', sucess: true });    
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(403).json({message:'Failed to get users'});
+    }
+};
+
+
+
+
