@@ -244,6 +244,6 @@ async function displayDetails(event){
 
 }
 
-amount.value = document.getElementById(`amount${id}`).innerText.split('-')[1];
-        desc.value = document.getElementById(`desc${id}`).innerText.split('-')[1];
-        category.value = document.getElementById(`category${id}`).innerText.split('-')[1];
+async function download(){
+    console.log('download Button clicked')
+}
