@@ -9,6 +9,8 @@ class expense {
 document.getElementById('myForm');
 let expenseContainer = document.getElementById('expense-container');
 let leaderBoard = document.getElementById('leader-board');
+let downloads = document.getElementById('downloads');
+let filesContainer = document.getElementById('files');
 let amount = document.getElementById('amount');
 let desc = document.getElementById('desc');
 let category = document.getElementById('category');
@@ -245,5 +247,37 @@ async function displayDetails(event){
 }
 
 async function download(){
-    console.log('download Button clicked')
+    try{
+        const response = await axios.get('http://localhost:3000/expense/download', { headers: { "Authorization": token } });
+        console.log(response);
+        let a = document.createElement('a');
+        a.href = response.data.fileUrl;
+        a.click();
+    }
+    catch(err){
+        console.log(err.response.status);
+        if(err.response.status == 403)
+        {
+            window.alert('Please Buy premium to access this Feature')
+        }
+    }
+}
+
+async function downloadFiles(){
+    try{
+        const response = await axios.get('http://localhost:3000/expense/getFiles', { headers: { "Authorization": token } });
+        // console.log(response.files);
+        let files = response.data.files;
+        filesContainer.innerHTML = '';
+        files.forEach((file,i)=>{
+            let linkHtml = `<div><a href=${file.url}>File${i+1}</a></div>`
+            filesContainer.innerHTML += linkHtml;
+        })
+        console.log(files)
+    }
+    catch(err){
+        console.log(err);
+    }
+    downloads.style.display = 'block';
+
 }

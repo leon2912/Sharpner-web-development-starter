@@ -8,6 +8,7 @@ router.delete('/:expenseid',UserAuthentication.authUser ,ExpenseController.delet
 router.put('/:expenseid',UserAuthentication.authUser, ExpenseController.updateExpense);
 // router.get('/:expenseid',ExpenseController.getExpense);
 router.get('/premiumUser', ExpenseController.getUserExpenses);
+router.get('/download', UserAuthentication.authUser , ExpenseController.downloadExpenses);
+router.get('/getFiles', UserAuthentication.authUser , ExpenseController.getPreviousFiles);
 router.get('/', UserAuthentication.authUser , ExpenseController.getExpenses);
-
 module.exports = router;
