@@ -14,15 +14,17 @@ let filesContainer = document.getElementById('files');
 let amount = document.getElementById('amount');
 let desc = document.getElementById('desc');
 let category = document.getElementById('category');
+let total = document.getElementById('total');
 let baseURL = 'http://localhost:3000/expense';
-
+let pagination = document.getElementById('pagination');
+let itemList = document.getElementById('expense-items');
 let updated = false;
 let updatedItemId = 0;
 let token = localStorage.getItem('userToken');
 
 
 window.addEventListener('DOMContentLoaded', () => {
-    displayInitialScreen();
+    displayExpenses(1);
 })
 
 
@@ -46,9 +48,9 @@ async function addItem(new_expense) {
     try {
         let token = localStorage.getItem('userToken');
         let response = await axios.post(baseURL, new_expense, { headers: { Authorization: token } });
-        displayItem(response.data)
+        total.innerText = response.data.user.totalExpense;
+        displayItem(response.data.expense)
         console.log(response);
-        myForm.reset();
         return response;
     }
     catch (err) {
@@ -56,17 +58,22 @@ async function addItem(new_expense) {
     }
 }
 
-async function displayInitialScreen() {
+async function displayExpenses(pageNo) {
     try {
         let token = localStorage.getItem('userToken');
-        let res = await axios.get(baseURL, { headers: { Authorization: token } });
+        itemList.innerHTML = '';
+        let res = await axios.get(`${baseURL}/userExpenses?page=${pageNo}`, { headers: { Authorization: token } });
         let allExpenses = res.data.expenses;
+        total.innerText = res.data.user.totalExpense;
         if (res.data.user.ispremiumuser) {
             document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/1595911.jpg')";
         };
         for (let i = 0; i < allExpenses.length; i++) {
             displayItem(allExpenses[i]);
         }
+        // let pagination = `<div class='pagination' id='pagination'></div>`
+        // expenseContainer.innerHTML += pagination;
+        showPagination(res.data);
     }
     catch {
         console.log('something went wrong');
@@ -100,7 +107,8 @@ function displayItem(expense) {
                     <button class='btn btn-danger delete' id='deleteBtn'>Delete</button>
                     <button class='btn btn-primary edit' id='editBtn'>Edit</button>
                     <hr>`
-    expenseContainer.appendChild(li);
+    // expenseContainer.appendChild(li);
+    itemList.appendChild(li);
 
 
     let deleteBtn = document.getElementById('deleteBtn');
@@ -128,7 +136,8 @@ async function deleteItem(e) {
         var li = e.target.parentElement;
         let delURL = `${baseURL}/${li.id}`;
         let response = await axios.delete(delURL, { headers: { Authorization: token } });
-        expenseContainer.removeChild(li);
+        total.innerText = response.data.user.totalExpense;
+        itemList.removeChild(li);
         return response;
     }
     catch {
@@ -145,7 +154,7 @@ async function updateItem(e) {
         category.value = document.getElementById(`category${id}`).innerText.split('-')[1];
         updated = true;
         updatedItemId = li.id;
-        expenseContainer.removeChild(li);
+        itemList.removeChild(li);
         myForm.classList.toggle("active");
         return delRes;
     }
@@ -280,4 +289,29 @@ async function downloadFiles(){
     }
     downloads.style.display = 'block';
 
+}
+
+function showPagination(data) {
+    pagination.innerHTML = '';
+    if (data.hasPrev) {
+        pagination.innerHTML = `<button class="page" id="prev" onclick=displayPrev(event,${data.currPage}) >prev</button>`;
+    }
+    pagination.innerHTML += `<span id="curr-page"> ${data.currPage} </span>`
+    if (data.hasNext) {
+        pagination.innerHTML += `<button class="page" id="next" onclick=displayNext(event,${data.currPage}) >next</button>`;
+    }
+}
+
+function displayNext(e,pageNo)
+{
+    console.log('Next Button Clicked');
+    let nextPage = parseInt(pageNo)+1;
+    displayExpenses(nextPage);
+}
+
+function displayPrev(e,pageNo)
+{
+    console.log('Next Button Clicked');
+    let nextPage = parseInt(pageNo)-1;
+    displayExpenses(nextPage);
 }
