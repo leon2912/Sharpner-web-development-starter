@@ -10,5 +10,5 @@ router.put('/:expenseid',UserAuthentication.authUser, ExpenseController.updateEx
 router.get('/premiumUser', ExpenseController.getUserExpenses);
 router.get('/download', UserAuthentication.authUser , ExpenseController.downloadExpenses);
 router.get('/getFiles', UserAuthentication.authUser , ExpenseController.getPreviousFiles);
-router.get('/', UserAuthentication.authUser , ExpenseController.getExpenses);
+router.get('/userExpenses', UserAuthentication.authUser , ExpenseController.getExpenses);
 module.exports = router;

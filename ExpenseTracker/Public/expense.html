@@ -200,6 +200,22 @@
         display: none;
     }
 
+    .page{
+    background: rgb(14, 158, 45);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none ;
+    font-family: inherit;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.pagination{
+    font-weight: bolder inherit;
+    justify-content: center;
+}
+
     
 </style>
 
@@ -208,6 +224,9 @@
         <input type="button" class='add-btn' id='add-btn' value="Add Expense">
         <div class="expense-container" id="expense-container">
             <div><h1>List of Expenses</h1><hr></div>
+            <div><h3>Total Expense: <span id='total'>100</span></h3><hr></div>
+            <div><ul id = 'expense-items'></ul></div>
+            <div class='pagination' id='pagination'></div>
         </div>
         <div class="leader-board" id="leader-board">
         </div>

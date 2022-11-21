@@ -13,12 +13,14 @@ const purchasepremium =async (req, res) => {
 
         rzp.orders.create({amount, currency: "INR"}, (err, order) => {
             if(err) {
+                console.log(err);
                 throw new Error(err);
             }
             req.user.createOrder({ orderid: order.id, status: 'PENDING'}).then(() => {
                 return res.status(201).json({ order, key_id : rzp.key_id});
 
-            }).catch(err => {
+            })
+            .catch(err => {
                 throw new Error(err)
             })
         })

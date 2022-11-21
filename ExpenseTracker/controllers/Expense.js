@@ -6,14 +6,22 @@ const { CognitoIdentityServiceProvider } = require('aws-sdk');
 exports.getExpenses = async (req, res, next) => {
   try {
     console.log(req.user.id);
+    const Items_Per_Page = 2;
     let user = req.user;
-    let expenses = await user.getExpenses()
-    res.json({ expenses: expenses, user: user });
+    const page = req.query.page;
+    let count = await Expense.count({where:{userId:req.user.id}});
+    console.log(`ofset:${(page-1)*Items_Per_Page},limit:${Items_Per_Page}`)
+    let expenses = await user.getExpenses({offset: (page-1)*Items_Per_Page, limit: Items_Per_Page})
+    res.json({ expenses: expenses, user: user ,success: true,
+      currPage: page,
+      hasNext: count > page * Items_Per_Page,
+      hasPrev: page > 1,});
   }
   catch (err) {
     console.log(err);
   }
 };
+
 
 exports.addExpense = (req, res, next) => {
   let user = req.user;
@@ -30,7 +38,7 @@ exports.addExpense = (req, res, next) => {
       async (result) => {
         user.totalExpense = user.totalExpense + parseFloat(amount);
         await user.save();
-        res.json(result);
+        res.json({expense:result,user:user});
       })
     .catch((err) => {
       console.log(err);
@@ -42,8 +50,12 @@ exports.deleteExpense = async (req, res, next) => {
     let user = req.user;
     const expenseId = req.params.expenseid;
     let expense = await user.getExpenses({ where: { id: expenseId } });
+    let deletedAmount = expense[0].amount;
     expense[0].destroy();
-    res.send(expenseId)
+    let newTotal = parseFloat(user.totalExpense) - parseFloat(deletedAmount);
+    console.log('Total Expense is',newTotal);
+    req.user.update({totalExpense: newTotal});
+    res.json({expenseId,user:user})
   }
   catch (err) {
     console.log(err);
