@@ -5,10 +5,9 @@ const { CognitoIdentityServiceProvider } = require('aws-sdk');
 
 exports.getExpenses = async (req, res, next) => {
   try {
-    console.log(req.user.id);
-    const Items_Per_Page = 2;
     let user = req.user;
     const page = req.query.page;
+    const Items_Per_Page = parseInt(req.query.limit);
     let count = await Expense.count({where:{userId:req.user.id}});
     console.log(`ofset:${(page-1)*Items_Per_Page},limit:${Items_Per_Page}`)
     let expenses = await user.getExpenses({offset: (page-1)*Items_Per_Page, limit: Items_Per_Page})

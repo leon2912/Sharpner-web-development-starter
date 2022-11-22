@@ -1,0 +1,211 @@
+li {
+    margin-left: 0%;
+    text-align: left;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font: size 20px;
+    ;
+}
+
+body {
+    background-image: url("background.jpg");
+}
+
+.sub-btn {
+    width: 98%;
+    height: 40px;
+    margin-left: 1%;
+    margin-right: 1%;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    color: white;
+    background: hsl(252, 73%, 20%);
+}
+
+.add-btn {
+    position: absolute;
+    top: 1rem;
+    /* left:20px; */
+    left: 2rem;
+    background-color: rgb(243, 40, 40);
+    padding: 10px;
+    font-family: inherit;
+    border-radius: 5px;
+    font-weight: bold;
+    color: rgb(30, 30, 82);
+    border: none;
+}
+
+label {
+    text-align: left;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+h1 {
+    color: hsl(252, 73%, 20%);
+}
+
+div {
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+}
+
+form {
+    position: absolute;
+    display: none;
+    top: 5rem;
+    left: 2rem;
+    width: 25%;
+    border: 3px;
+    border-style: double;
+    border-color: hsl(252, 73%, 20%);
+    border-width: 2px;
+    border-radius: 8px;
+    background-color: rgb(182, 201, 242);
+}
+
+form.active {
+    display: block;
+}
+
+.input-fields {
+    text-align: left;
+    margin-left: 20px;
+    width: 400px;
+}
+
+.input-fields input {
+    width: auto;
+    border-radius: 5px;
+    padding: 3px;
+    border: solid 1px rgb(22, 22, 73);
+}
+
+.input-fields select {
+    width: auto;
+    border-radius: 5px;
+    padding: 3px;
+    border: solid 1px rgb(22, 22, 73);
+}
+
+.expense-container {
+    position: absolute;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    width: 35%;
+    padding: 10px;
+    background-color: rgb(182, 201, 242);
+    top: 5rem;
+    right: 32rem;
+}
+
+.expense-container li {
+    padding: 10px;
+}
+
+.expense-container button {
+    padding: 5px;
+}
+
+.premium-btn {
+    position: absolute;
+    top: 1rem;
+    left: 10rem;
+    background-color: rgb(243, 40, 40);
+    padding: 10px;
+    font-family: inherit;
+    border-radius: 5px;
+    font-weight: bold;
+    color: rgb(30, 30, 82);
+    border: none;
+}
+
+.leader-board {
+    position: absolute;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    width: 25%;
+    padding: 10px;
+    background-color: rgb(182, 201, 242);
+    top: 5rem;
+    right: 2rem;
+    display: none;
+}
+
+.leader-button {
+    position: absolute;
+    top: 1rem;
+    left: 19rem;
+    background-color: rgb(243, 40, 40);
+    padding: 10px;
+    font-family: inherit;
+    border-radius: 5px;
+    font-weight: bold;
+    color: rgb(30, 30, 82);
+    border: none;
+}
+
+.details {
+    text-align: justify;
+    font-weight: bold;
+}
+
+.download-expense {
+    position: absolute;
+    top: 1rem;
+    left: 28rem;
+    background-color: rgb(243, 40, 40);
+    padding: 10px;
+    font-family: inherit;
+    border-radius: 5px;
+    font-weight: bold;
+    color: rgb(30, 30, 82);
+    border: none;
+}
+
+.downloadP-expense {
+    position: absolute;
+    top: 1rem;
+    left: 39rem;
+    background-color: rgb(243, 40, 40);
+    padding: 10px;
+    font-family: inherit;
+    border-radius: 5px;
+    font-weight: bold;
+    color: rgb(30, 30, 82);
+    border: none;
+}
+
+.downloads {
+    position: absolute;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    width: 25%;
+    padding: 10px;
+    background-color: rgb(182, 201, 242);
+    top: 25rem;
+    right: 2rem;
+    display: none;
+}
+
+.page {
+    background: rgb(14, 158, 45);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-family: inherit;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.pagination {
+    font-weight: bolder inherit;
+    justify-content: center;
+}
+
+.pageNo {
+    position: absolute;
+    right: 1rem;
+}
