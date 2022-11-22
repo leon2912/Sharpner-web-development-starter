@@ -24,7 +24,7 @@ let token = localStorage.getItem('userToken');
 
 
 window.addEventListener('DOMContentLoaded', () => {
-    displayExpenses(1);
+    displayExpenses(1,2);
 })
 
 
@@ -58,11 +58,11 @@ async function addItem(new_expense) {
     }
 }
 
-async function displayExpenses(pageNo) {
+async function displayExpenses(pageNo,limit) {
     try {
         let token = localStorage.getItem('userToken');
         itemList.innerHTML = '';
-        let res = await axios.get(`${baseURL}/userExpenses?page=${pageNo}`, { headers: { Authorization: token } });
+        let res = await axios.get(`${baseURL}/userExpenses?page=${pageNo}&limit=${limit}`, { headers: { Authorization: token } });
         let allExpenses = res.data.expenses;
         total.innerText = res.data.user.totalExpense;
         if (res.data.user.ispremiumuser) {
@@ -305,13 +305,21 @@ function showPagination(data) {
 function displayNext(e,pageNo)
 {
     console.log('Next Button Clicked');
+    let limit = document.getElementById("mySelect").value;
     let nextPage = parseInt(pageNo)+1;
-    displayExpenses(nextPage);
+    displayExpenses(nextPage,limit);
 }
 
 function displayPrev(e,pageNo)
 {
     console.log('Next Button Clicked');
+    let limit = document.getElementById("mySelect").value;
     let nextPage = parseInt(pageNo)-1;
-    displayExpenses(nextPage);
+    displayExpenses(nextPage,limit);
+}
+
+function dynamicPagination()
+{
+    let limit = document.getElementById("mySelect").value;
+    displayExpenses(1,limit);  
 }
