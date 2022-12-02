@@ -19,7 +19,7 @@ form.addEventListener('submit', async (e)=>{
     let newUSer = new user('leon', email.value, password.value);
     let response = await axios.post('http://localhost:3000/user/login', newUSer)
     localStorage.setItem('userToken',response.data.token);
-    window.location.replace('http://127.0.0.1:5500/ExpenseTracker/Public/expense.html');
+    window.location.replace('C:/Users/falca/OneDrive/Desktop/js-basics/ExpenseTracker/Public/expense.html');
     }
     catch(err){
         console.log(err);

@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const sequelize = require('./util/database')
@@ -12,19 +13,21 @@ const Order = require('./models/Order');
 const resetPasswordRoutes = require('./routes/resetpassword')
 const Forgotpassword = require('./models/forgotpassword');
 const DownloadedFiles = require('./models/downloadedFiles');
-
+const morgan = require('morgan');
+const helmet = require('helmet');
+const fs = require('fs');
+const { url } = require('inspector');
 
 
 const app = express();
-
+app.use(helmet());
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+app.use(morgan('tiny', { stream: accessLogStream }))
 app.use(cors());
 app.use(bodyParser.json());
-
-
 app.use('/expense', expenseRoutes);
 app.use('/user', userRoutes);
 app.use('/purchase', purchaseRoutes);
-
 app.use('/password', resetPasswordRoutes);
 
 
@@ -44,5 +47,6 @@ User.hasMany(DownloadedFiles);
 sequelize
 .sync()
 // .sync({ force: true })
-.then((result)=>{console.log('success')});
-app.listen(3000);
+.then((result)=>{console.log('success')
+app.listen(3000);}
+);
