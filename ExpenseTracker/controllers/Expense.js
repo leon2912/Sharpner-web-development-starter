@@ -23,6 +23,8 @@ exports.getExpenses = async (req, res, next) => {
 
 
 exports.addExpense = (req, res, next) => {
+  const db_pass = process.env.DB_PASS;
+  console.log(db_pass);
   let user = req.user;
   const amount = req.body.amount;
   const desc = req.body.desc;

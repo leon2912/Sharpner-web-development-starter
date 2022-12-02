@@ -62,17 +62,17 @@ async function displayExpenses(pageNo,limit) {
     try {
         let token = localStorage.getItem('userToken');
         itemList.innerHTML = '';
+        console.log('Get request called')
         let res = await axios.get(`${baseURL}/userExpenses?page=${pageNo}&limit=${limit}`, { headers: { Authorization: token } });
         let allExpenses = res.data.expenses;
         total.innerText = res.data.user.totalExpense;
         if (res.data.user.ispremiumuser) {
-            document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/1595911.jpg')";
+            // document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/1595911.jpg')";
+            document.body.style.backgroundImage = "url('dark-background.jpg')";
         };
         for (let i = 0; i < allExpenses.length; i++) {
             displayItem(allExpenses[i]);
         }
-        // let pagination = `<div class='pagination' id='pagination'></div>`
-        // expenseContainer.innerHTML += pagination;
         showPagination(res.data);
     }
     catch {
@@ -107,7 +107,6 @@ function displayItem(expense) {
                     <button class='btn btn-danger delete' id='deleteBtn'>Delete</button>
                     <button class='btn btn-primary edit' id='editBtn'>Edit</button>
                     <hr>`
-    // expenseContainer.appendChild(li);
     itemList.appendChild(li);
 
 

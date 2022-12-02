@@ -1,0 +1,16 @@
+OPTIONS /expense/userExpenses?page=1&limit=2 204 0 - 0.120 ms
+GET /expense/userExpenses?page=1&limit=2 304 - - 21.218 ms
+OPTIONS /expense/userExpenses?page=1&limit=2 204 0 - 1.427 ms
+GET /expense/userExpenses?page=1&limit=2 304 - - 26.869 ms
+OPTIONS /expense/userExpenses?page=2&limit=2 204 0 - 0.205 ms
+GET /expense/userExpenses?page=2&limit=2 200 623 - 15.552 ms
+OPTIONS /expense/userExpenses?page=3&limit=2 204 0 - 0.118 ms
+GET /expense/userExpenses?page=3&limit=2 200 642 - 10.115 ms
+OPTIONS /expense/userExpenses?page=1&limit=4 204 0 - 0.239 ms
+GET /expense/userExpenses?page=1&limit=4 200 929 - 7.556 ms
+OPTIONS /expense/userExpenses?page=2&limit=4 204 0 - 0.117 ms
+GET /expense/userExpenses?page=2&limit=4 200 799 - 8.224 ms
+OPTIONS /expense/userExpenses?page=1&limit=4 204 0 - 0.140 ms
+GET /expense/userExpenses?page=1&limit=4 304 - - 7.749 ms
+OPTIONS /expense/userExpenses?page=1&limit=2 204 0 - 0.238 ms
+GET /expense/userExpenses?page=1&limit=2 304 - - 27.089 ms
