@@ -20,7 +20,7 @@ const { url } = require('inspector');
 
 
 const app = express();
-// app.use(helmet());
+app.use(helmet());
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('tiny', { stream: accessLogStream }))
 app.use(cors());
