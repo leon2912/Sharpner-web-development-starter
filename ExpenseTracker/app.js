@@ -31,7 +31,7 @@ app.use('/purchase', purchaseRoutes);
 app.use('/password', resetPasswordRoutes);
 app.use((req,res)=>{
     console.log('frontend url:',req.url);
-    res.sendFile(path.join(__dirname,`public/${req.url}`));
+    res.sendFile(path.join(__dirname,`Public/${req.url}`));
 })
 
 
