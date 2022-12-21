@@ -11,7 +11,7 @@ const forgotpassword = async (req, res) => {
         if (user) {
             const id = uuid.v4();
             user.createForgotpassword({ id, active: true })
-            res.status(200).json({ message: 'Link to reset password sent to your mail ', sucess: true, resetLink: `http://localhost:3000/password/resetpassword/${id}` })
+            res.status(200).json({ message: 'Link to reset password sent to your mail ', sucess: true, resetLink: `http://44.212.63.93:3000/password/resetpassword/${id}` })
         }
         else{
             res.status(200).json({ message: 'User Not Found', sucess: false });    

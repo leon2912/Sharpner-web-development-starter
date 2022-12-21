@@ -15,7 +15,7 @@ let amount = document.getElementById('amount');
 let desc = document.getElementById('desc');
 let category = document.getElementById('category');
 let total = document.getElementById('total');
-let baseURL = 'http://localhost:3000/expense';
+let baseURL = 'http://44.212.63.93:3000/expense';
 let pagination = document.getElementById('pagination');
 let itemList = document.getElementById('expense-items');
 let updated = false;
@@ -169,7 +169,7 @@ addBtn.addEventListener('click', (e) => {
 })
 
 document.getElementById('rzp-button1').onclick = async function (e) {
-    const response = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: { "Authorization": token } });
+    const response = await axios.get('http://44.212.63.93:3000/purchase/premiummembership', { headers: { "Authorization": token } });
     console.log(response);
     var options =
     {
@@ -187,7 +187,7 @@ document.getElementById('rzp-button1').onclick = async function (e) {
         // This handler function will handle the success payment
         "handler": function (response) {
             console.log(response);
-            axios.post('http://localhost:3000/purchase/updatetransactionstatus', {
+            axios.post('http://44.212.63.93:3000/purchase/updatetransactionstatus', {
                 order_id: options.order_id,
                 payment_id: response.razorpay_payment_id,
             }, { headers: { "Authorization": token } }).then(() => {
@@ -214,7 +214,7 @@ document.getElementById('rzp-button1').onclick = async function (e) {
 
 document.getElementById('leader-button').onclick = async function (e) {
     try {
-        const response = await axios.get('http://localhost:3000/user', { headers: { "Authorization": token } });
+        const response = await axios.get('http://44.212.63.93:3000/user', { headers: { "Authorization": token } });
         let users = response.data.users;
         console.log(users);
         leaderBoard.innerHTML = '<div><h1>Leader Board</h1><hr></div>'
@@ -242,7 +242,7 @@ document.getElementById('leader-button').onclick = async function (e) {
 
 async function displayDetails(event){
     let userId = event.parentNode.id;
-    const response = await axios.get(`http://localhost:3000/expense/premiumUser?userId=${userId}`)
+    const response = await axios.get(`http://44.212.63.93:3000/expense/premiumUser?userId=${userId}`)
     let userExpenses = response.data.expenses;
     let li = event.parentNode;
     let details = document.getElementById(`details${userId}`)
@@ -256,7 +256,7 @@ async function displayDetails(event){
 
 async function download(){
     try{
-        const response = await axios.get('http://localhost:3000/expense/download', { headers: { "Authorization": token } });
+        const response = await axios.get('http://44.212.63.93:3000/expense/download', { headers: { "Authorization": token } });
         console.log(response);
         let a = document.createElement('a');
         a.href = response.data.fileUrl;
@@ -273,7 +273,7 @@ async function download(){
 
 async function downloadFiles(){
     try{
-        const response = await axios.get('http://localhost:3000/expense/getFiles', { headers: { "Authorization": token } });
+        const response = await axios.get('http://44.212.63.93:3000/expense/getFiles', { headers: { "Authorization": token } });
         // console.log(response.files);
         let files = response.data.files;
         filesContainer.innerHTML = '';

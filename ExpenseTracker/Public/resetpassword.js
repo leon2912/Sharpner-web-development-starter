@@ -5,7 +5,7 @@ form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     console.log(email.value);
     try{
-        let response = await axios.post('http://localhost:3000/password/forgotpassword', {email:email.value});
+        let response = await axios.post('http://44.212.63.93:3000/password/forgotpassword', {email:email.value});
         if(response.data.sucess){
         let resetLink = response.data.resetLink;
         form.innerHTML += `<a href="${resetLink}">Reset password</a>`
