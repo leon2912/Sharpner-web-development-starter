@@ -16,10 +16,14 @@ const DownloadedFiles = require('./models/downloadedFiles');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const fs = require('fs');
-const { url } = require('inspector');
+// const { url } = require('inspector');
 
 
 const app = express();
+app.use((req,res)=>{
+    console.log('frontend url:',req.url);
+    res.sendFile(path.join(__dirname,`Public/${req.url}`));
+})
 app.use(helmet());
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('tiny', { stream: accessLogStream }))
@@ -29,10 +33,7 @@ app.use('/expense', expenseRoutes);
 app.use('/user', userRoutes);
 app.use('/purchase', purchaseRoutes);
 app.use('/password', resetPasswordRoutes);
-app.use((req,res)=>{
-    console.log('frontend url:',req.url);
-    res.sendFile(path.join(__dirname,`Public/${req.url}`));
-})
+
 
 
 
