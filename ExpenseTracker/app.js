@@ -20,10 +20,10 @@ const fs = require('fs');
 
 
 const app = express();
-app.use(helmet());
+// app.use(helmet());
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('tiny', { stream: accessLogStream }))
-// app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/expense', expenseRoutes);
 app.use('/user', userRoutes);
