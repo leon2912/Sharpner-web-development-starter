@@ -34,5 +34,5 @@ form.addEventListener('submit', async (e)=>{
 let forgotPassword = document.getElementById('forgot-password');
 forgotPassword.addEventListener('click',(e)=>{
     console.log(e.target);
-    window.location.replace('http://127.0.0.1:5500/ExpenseTracker/Public/reset.html');
+    window.location.replace('http://44.212.63.93:3000/reset.html');
 })
