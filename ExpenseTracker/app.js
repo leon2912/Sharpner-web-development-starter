@@ -34,10 +34,6 @@ app.use((req,res)=>{
     res.sendFile(path.join(__dirname,`Public/${req.url}`));
 })
 
-
-
-
-
 Expense.belongsTo(User);
 User.hasMany(Expense);
 
