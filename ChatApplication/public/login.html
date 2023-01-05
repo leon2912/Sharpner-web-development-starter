@@ -4,29 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Application</title>
+    <title>Expense Tracker</title>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css" />
 <body>
     <div class="SignUp">
         <div>
-            <h1>Register Here</h1>
+            <h1>Login Now</h1>
         </div>
         <hr>
-        <form id="signupForm" action="post">
+        <form id="loginForm" action="post">
             <div class="form">
-            <label>Name</label>
-            <br>
-            <input type="text" name="name" id="name" >
-            <br>
             <label>Email</label>
             <br>
             <input type="text" name="email" id="email">
-            <br>
-            <label>Phone</label>
-            <br>
-            <input type="text" name="phone" id="phone">
             <br>
             <label>Password</label>
             <br>
@@ -36,10 +28,13 @@
             </div>
             <span id="message"></span>
         </form>
+        <div class="forgot-password">
+            <input type="submit" class = 'forgot-btn' value="Forgot Password" id="forgot-password">
+        </div>
         <br>
-        <span id="signup">Already have an Account Please Login <a href="login.html">here</a>.</span>
+        <span id="login">Dont have an Account Please Register <a href="signup.html">here</a>.</span>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-    <script src="signup.js"></script>   
+    <script src="login.js"></script>   
 </body>
 </html>
