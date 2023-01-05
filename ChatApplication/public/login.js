@@ -19,7 +19,7 @@ form.addEventListener('submit', async (e)=>{
     let newUSer = new user('leon', email.value, password.value);
     let response = await axios.post('http://localhost:3000/user/login', newUSer)
     localStorage.setItem('userToken',response.data.token);
-    document.location.href = 'expense.html';
+    document.location.href = 'index.html';
     }
     catch(err){
         console.log(err);
