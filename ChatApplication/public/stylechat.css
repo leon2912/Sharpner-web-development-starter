@@ -1,0 +1,26 @@
+.chat{
+    text-align: center;
+    padding: 1rem;
+}
+
+.message{
+    text-align: center;
+    background-color: #128C7E;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+}
+
+.input_message{
+    width: 30%;
+    border-radius: 5px;
+}
+
+.letschat{
+    background-color: #128C7E ;
+    font-family: inherit;
+    font-weight: bold;
+    padding: 1.5rem;
+    color: antiquewhite;
+}
