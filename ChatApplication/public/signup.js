@@ -18,7 +18,7 @@ form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     let message;
     try{
-    let newUSer = new user(fname.value, email.value, password.value);
+    let newUSer = new user(fname.value, email.value,phone.value, password.value);
     await axios.post('http://localhost:3000/user/signup', newUSer)
         message = 'User Created Successfully'
     }
