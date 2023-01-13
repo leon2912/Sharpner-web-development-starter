@@ -9,7 +9,7 @@ exports.authUser = async (req, res, next) => {
         const user = jwt.verify(token,'secretKey');
         const userId = user.userId;
         let loggedUser = await User.findByPk(userId);
-        // console.log(`logged user is: ${loggedUser}`);
+        console.log(loggedUser);
         req.user = loggedUser;
         next();
     }
