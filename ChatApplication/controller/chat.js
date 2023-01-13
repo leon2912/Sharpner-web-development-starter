@@ -6,6 +6,7 @@ const User = require('../models/user');
 
 exports.postMessage = async (req, res, next) => {
   const message = req.body.message;
+  let arr = [];
   try {
     const userId = req.user.dataValues.id;
     let loggedUser = await User.findByPk(userId);
