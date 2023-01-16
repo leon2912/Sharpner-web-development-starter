@@ -1,6 +1,8 @@
 
 const Chat = require('../models/chat')
 const User = require('../models/user');
+const { Op }  = require("sequelize");
+const { where } = require('sequelize');
 
 
 
@@ -36,7 +38,10 @@ exports.postMessage = async (req, res, next) => {
 
 exports.getMessages = async (req, res, next) => {
   try {
-    let chats = await Chat.findAll();
+    let lastMessageId = req.query.lastMessageId;
+    console.log(lastMessageId);
+    let chats = await Chat.findAll({where:{id:{[Op.gt]:lastMessageId}}});
+    // console.log(chats.length);
     res.status(200).json({ chats:chats });
   }
   catch (err) {
