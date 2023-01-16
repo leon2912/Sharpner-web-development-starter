@@ -35,7 +35,7 @@ hr{
 }
 
 body{
-    background-image:url('/MiniProject1/background.jpg')
+    background-image:url('./background.jpg')
 }
 
 input{

@@ -12,17 +12,28 @@
     <div class="letschat">
         <label><h2>Lets Chat</h2></label>
     </div>
+    <div class="group">
+        <form id="createGroup" action="post">
+            <div class="">
+            <input type="text" class="groupName" id="groupName" placeholder="Group Name">
+            <input type="submit" class = 'sub-btn' value="Create">
+            </div>
+            <div>
+                <ul id = "groups" class="groups"></ul>
+            </div>
+        </form>
+    </div>
         <div class="chat">
             <label>You Joined</label>
             <ul id = "chats" class="chats"></ul>
-        </div>
-        <div class="message">
-        <form id="send_message" action="post">
-            <div class="form">
-            <input type="text" class="input_message" id="message">
-            <input type="submit" class = 'sub-btn' value="Send" >
-            </div>
-        </form>
+            <div class="message">
+                <form id="send_message" action="post">
+                    <div class="form">
+                    <input type="text" class="input_message" id="message" placeholder="Type a message">
+                    <input type="submit" class = 'sub-btn' value="Send" >
+                    </div>
+                </form>
+        </div>  
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script> 
     <script src="index.js"></script>  
