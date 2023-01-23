@@ -8,11 +8,12 @@ const { where } = require('sequelize');
 
 exports.postMessage = async (req, res, next) => {
   const message = req.body.message;
+  const groupId = req.body.groupId;
   let arr = [];
   try {
     const userId = req.user.dataValues.id;
     let loggedUser = await User.findByPk(userId);
-    const data = await loggedUser.createChat({ message: message, username: loggedUser.dataValues.name });
+    const data = await loggedUser.createChat({ message: message,groupId:groupId,username: loggedUser.dataValues.name });
     const name = req.user.username;
     const details = {
       id: data.id,
@@ -38,10 +39,13 @@ exports.postMessage = async (req, res, next) => {
 
 exports.getMessages = async (req, res, next) => {
   try {
+    let groupId = req.query.groupId;
     let lastMessageId = req.query.lastMessageId;
     console.log(lastMessageId);
-    let chats = await Chat.findAll({where:{id:{[Op.gt]:lastMessageId}}});
+    let chats = await Chat.findAll({where:{id:{[Op.gt]:lastMessageId},groupId:groupId}});
+    // {where:{groupId}}
     // console.log(chats.length);
+    console.log(chats);
     res.status(200).json({ chats:chats });
   }
   catch (err) {

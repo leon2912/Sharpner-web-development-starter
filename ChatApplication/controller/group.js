@@ -6,6 +6,7 @@ const Usergroups = require('../models/usergroup');
 exports.getGroups = async(req,res,next)=>{
 
     try{
+        console.log(req.user);
         let groups = await Usergroups.findAll({where:{userId:req.user.id}})
         let data = [];
         for(let i=0;i<groups.length;i++){
@@ -19,7 +20,8 @@ exports.getGroups = async(req,res,next)=>{
 
     }
 
-    catch(error){
+    catch(err){
+        console.log(err);
         res.status(500).json(err)
     }
 }

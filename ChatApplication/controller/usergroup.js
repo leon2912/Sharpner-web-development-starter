@@ -31,7 +31,7 @@ exports.fetchUsers = async (req,res,next)=>{
     try{
 
         let groupId = req.params.groupId;
-        console.log(groupId);
+        console.log(`<<<<<<<< Group Id is${groupId}`);
 
         const group = await Group.findByPk(groupId);
 
@@ -41,8 +41,8 @@ exports.fetchUsers = async (req,res,next)=>{
 
         let users = await group.getUsers()
         let data = users.filter(user=> user.id != req.user.id)
-
-        return res.status(200).json(data)
+        console.log(`<<<<<<<< Users are ${data}`);
+        return res.status(200).json(data);
 
     }
     catch(err){

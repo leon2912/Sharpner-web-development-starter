@@ -90,3 +90,7 @@ ul li{
     text-align: left;
     margin-top: 1rem;
 }
+
+.active{
+    background-color: rgb(186, 34, 59);
+}
