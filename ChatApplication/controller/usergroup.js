@@ -40,9 +40,9 @@ exports.fetchUsers = async (req,res,next)=>{
         }
 
         let users = await group.getUsers()
-        let data = users.filter(user=> user.id != req.user.id)
-        console.log(`<<<<<<<< Users are ${data}`);
-        return res.status(200).json(data);
+        // let data = users.filter(user=> user.id != req.user.id)
+        // console.log(`<<<<<<<< Users are ${data}`);
+        return res.status(200).json(users);
 
     }
     catch(err){

@@ -94,3 +94,19 @@ ul li{
 .active{
     background-color: rgb(186, 34, 59);
 }
+
+.groupUsers{
+    margin-top: 5px;
+    text-align: center;
+    width: 25%;
+    position:absolute;
+    font-weight: bold;
+    font-family: inherit;
+    right: 5px;
+}
+
+.users{
+    list-style-type: none;
+    text-align: left;
+}
+
