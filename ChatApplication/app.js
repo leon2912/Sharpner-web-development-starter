@@ -23,6 +23,10 @@ app.use(bodyParser.json());
 app.use('/user', userRoutes);
 app.use('/message', messageRoutes);
 app.use('/group', groupRoutes );
+app.use((req,res)=>{
+    console.log('frontend url:',req.url);
+    res.sendFile(path.join(__dirname,`public/${req.url}`));
+})
 
 
 

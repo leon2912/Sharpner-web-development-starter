@@ -5,7 +5,7 @@
 let messageForm = document.getElementById('send_message');
 let groupForm = document.getElementById('createGroup');
 let userMessage = document.getElementById('message');
-let baseURL = 'http://localhost:3000/message/postMessage'
+let baseURL = 'http://ec2-44-203-27-62.compute-1.amazonaws.com:3000/message/postMessage'
 let chatList = document.getElementById('chats');
 let userList = document.getElementById('users');
 let token = localStorage.getItem('userToken');
@@ -40,7 +40,7 @@ groupForm.addEventListener('submit', async (e) => {
         console.log('Inside Create Group');
         let token = localStorage.getItem('userToken');
         let groupName = { grpName: document.getElementById('groupName').value };
-        let response = await axios.post('http://localhost:3000/group/createGroup', groupName, { headers: { Authorization: token } });
+        let response = await axios.post('http://ec2-44-203-27-62.compute-1.amazonaws.com/group/createGroup', groupName, { headers: { Authorization: token } });
         console.log(response);
         location.reload();
     }
@@ -64,7 +64,7 @@ async function getMessages(groupId) {
             lastElementId = oldMessages[oldMessages.length - 1].id;
         }
         myTimer = setInterval(async () => {
-            let response = await axios.get(`http://localhost:3000/message/getMessages?groupId=${groupId}&lastMessageId=${lastElementId}`, { headers: { Authorization: token } });
+            let response = await axios.get(`http://ec2-44-203-27-62.compute-1.amazonaws.com/message/getMessages?groupId=${groupId}&lastMessageId=${lastElementId}`, { headers: { Authorization: token } });
             let chats = response.data.chats;
             if (chats.length != 0) {
                 let updatedChat = [];
@@ -94,7 +94,7 @@ async function getMessages(groupId) {
 }
 
 async function displayGroups() {
-    let response = await axios.get('http://localhost:3000/group/getGroups', { headers: { Authorization: token } });
+    let response = await axios.get('http://ec2-44-203-27-62.compute-1.amazonaws.com/group/getGroups', { headers: { Authorization: token } });
     let groups = response.data.data;
     groups.forEach(element => {
         groupList.innerHTML += `<li class='groupList' id=${element.id}>${element.name}</li>`
@@ -117,9 +117,9 @@ groupList.addEventListener('click', (e) => {
 })
 
 async function getGroupUsers(groupId) {
-    let response = await axios.get(`http://localhost:3000/group/fetchUsers/${groupId}`, { headers: { Authorization: token } });
+    let response = await axios.get(`http://ec2-44-203-27-62.compute-1.amazonaws.com/group/fetchUsers/${groupId}`, { headers: { Authorization: token } });
     let users = response.data;
-    response = await axios.get(`http://localhost:3000/group/isAdmin/${groupId}`, { headers: { Authorization: token } });
+    response = await axios.get(`http://ec2-44-203-27-62.compute-1.amazonaws.com/group/isAdmin/${groupId}`, { headers: { Authorization: token } });
     let isAdmin = response.data;
     userList.innerHTML = '';
     if (isAdmin == true) {
@@ -159,7 +159,7 @@ userForm.addEventListener('submit', async (e) => {
     try {
         let newUserEmail =  document.getElementById('addUser').value;
         userDetails = {email:newUserEmail,groupId:currentGroupId}
-        let response = await axios.post(`http://localhost:3000/group/addUser`,userDetails, { headers: { Authorization: token } })
+        let response = await axios.post(`http://ec2-44-203-27-62.compute-1.amazonaws.com/group/addUser`,userDetails, { headers: { Authorization: token } })
         console.log(response);
     }
     catch (err) {
@@ -170,7 +170,7 @@ userForm.addEventListener('submit', async (e) => {
 async function removeUser(userId){
     let userDetails = {userId:userId,groupId:currentGroupId};
     try{
-    let response = await axios.post(`http://localhost:3000/group/removeUser`,userDetails, { headers: { Authorization: token } })
+    let response = await axios.post(`http://ec2-44-203-27-62.compute-1.amazonaws.com/group/removeUser`,userDetails, { headers: { Authorization: token } })
     console.log(`User ${userId} Removed`);
     }
     catch(err){
@@ -181,7 +181,7 @@ async function removeUser(userId){
 async function makeAdmin(userId){
     let userDetails = {userId:userId,groupId:currentGroupId};
     try{
-    let response = await axios.post(`http://localhost:3000/group/makeAdmin`,userDetails, { headers: { Authorization: token } })
+    let response = await axios.post(`http://ec2-44-203-27-62.compute-1.amazonaws.com/group/makeAdmin`,userDetails, { headers: { Authorization: token } })
     alert(`${response.data.user.name} is a admin Now`);
     }
     catch(err){
@@ -193,7 +193,7 @@ async function makeAdmin(userId){
 async function removeAdmin(userId){
     let userDetails = {userId:userId,groupId:currentGroupId};
     try{
-    let response = await axios.post(`http://localhost:3000/group/removeAdmin`,userDetails, { headers: { Authorization: token } })
+    let response = await axios.post(`http://ec2-44-203-27-62.compute-1.amazonaws.com/group/removeAdmin`,userDetails, { headers: { Authorization: token } })
     alert(`${response.data.user.name} is removed from Admin Now!!`);
     }
     catch(err){

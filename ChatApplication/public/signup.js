@@ -19,7 +19,7 @@ form.addEventListener('submit', async (e)=>{
     let message;
     try{
     let newUSer = new user(fname.value, email.value,phone.value, password.value);
-    await axios.post('http://localhost:3000/user/signup', newUSer)
+    await axios.post('http://ec2-44-203-27-62.compute-1.amazonaws.com:3000/user/signup', newUSer)
         message = 'User Created Successfully'
     }
     catch(err){
@@ -27,7 +27,7 @@ form.addEventListener('submit', async (e)=>{
     }
     msgContainer.innerText = message;
     setTimeout(()=>{
-        msgContainer.innerText = '';    
+        msgContainer.innerText = 'http://ec2-44-203-27-62.compute-1.amazonaws.com:3000/public/reset.html';    
     },4000);
     form.reset();
 })

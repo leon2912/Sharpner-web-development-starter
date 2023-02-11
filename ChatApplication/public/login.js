@@ -17,9 +17,9 @@ form.addEventListener('submit', async (e)=>{
     let message;
     try{
     let newUSer = new user('leon', email.value, password.value);
-    let response = await axios.post('http://localhost:3000/user/login', newUSer)
+    let response = await axios.post('http://ec2-44-203-27-62.compute-1.amazonaws.com:3000/user/login', newUSer)
     localStorage.setItem('userToken',response.data.token);
-    document.location.href = 'index.html';
+    document.location.href = 'http://ec2-44-203-27-62.compute-1.amazonaws.com:3000/index.html';
     }
     catch(err){
         console.log(err);
@@ -34,5 +34,5 @@ form.addEventListener('submit', async (e)=>{
 let forgotPassword = document.getElementById('forgot-password');
 forgotPassword.addEventListener('click',(e)=>{
     console.log(e.target);
-    window.location.replace('http://127.0.0.1:5500/ExpenseTracker/Public/reset.html');
+    window.location.replace('http://ec2-44-203-27-62.compute-1.amazonaws.com:3000/public/reset.html');
 })
